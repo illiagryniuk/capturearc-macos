@@ -59,7 +59,7 @@ On first launch, authorize a capture folder. Then press Shift–Command–5, ope
 
 ## Launch recommendation
 
-- Price: free for version 1.0 is the lowest-friction launch option; do not set pricing until the owner confirms.
-- Availability: do not select territories until trader status and support coverage are confirmed.
+- Price: free for version 1.0 (USD 0.00 across all 175 price regions).
+- Availability: all 175 countries and regions selected.
 - Pre-order: no.
 - Phased release: yes after a successful TestFlight/internal test.
