@@ -1,8 +1,8 @@
 # CaptureArc Mac App Store readiness
 
-Status: **Prepared for final App Store Connect completion**
+Status: **Ready for owner-approved review submission**
 
-The app, App Store record, free pricing, listing draft, public support pages, and distribution-signed installer are prepared. Four owner-confirmed actions remain before build upload and review: publish the privacy disclosure, choose availability territories, use the owner's contact details for App Review, and install/use Apple's Transporter uploader.
+The app, App Store record, free pricing, listing, public support pages, privacy disclosure, worldwide availability, review contact, and distribution-signed installer are prepared. Apple processed build 1.0.0 (2) successfully, and it is attached to macOS version 1.0. App Store Connect enables **Add for Review** with no unresolved validation blocker.
 
 ## Completed locally
 
@@ -31,20 +31,19 @@ The app, App Store record, free pricing, listing draft, public support pages, an
 - Five 2880x1800 screenshots uploaded and ordered from `01` through `05`
 - Price set to USD 0.00 across all 175 price regions
 - App privacy answer saved as **Data Not Collected**
+- **Data Not Collected** privacy disclosure published
+- Availability enabled for all 175 countries and regions
+- App Review contact name, phone, and email saved
 - Manual release selected
+- Transporter installed and signed package delivered
+- Build 1.0.0 (2) completed Apple processing and was attached to version 1.0
+- Final version draft saved with **Add for Review** enabled
 
-## Remaining owner-confirmed actions
+## Remaining human release gate
 
-1. Publish the saved **Data Not Collected** privacy disclosure.
-2. Choose App Availability territories (recommended: all available countries and regions).
-3. Authorize use of the owner's existing Apple account contact details for the App Review contact fields.
-4. Authorize installation of Apple's Transporter app and upload `dist/AppStore/CaptureArc-1.0.0.pkg`.
-
-## Work after those confirmations
-
-1. Wait for Apple's build processing and select build 1.0.0 (1) on the version page.
-2. Resolve any App Store Connect validation messages and run an internal/TestFlight check if available.
-3. The owner manually approves **Add for Review** and **Submit for Review**.
+1. Optionally install build 2 through TestFlight for a second-Mac/user smoke test.
+2. The owner manually approves **Add for Review**.
+3. Inspect the generated review submission, then the owner manually approves **Submit for Review**.
 
 ## Distribution build commands
 
@@ -57,10 +56,11 @@ Local sandbox QA candidate:
 Rebuild the final installer with the matching profile:
 
 ```bash
-APP_STORE_PROVISIONING_PROFILE="/absolute/path/CaptureArc_AppStore.provisionprofile" \
+APP_STORE_BUILD_NUMBER="<next-unused-build-number>" \
+  APP_STORE_PROVISIONING_PROFILE="/absolute/path/CaptureArc_AppStore.provisionprofile" \
   ./script/build_app_store.sh --package
 ```
 
 For non-default or temporary signing keychains, also set `APP_STORE_SIGNING_KEYCHAIN` to the keychain path.
 
-The packaging command intentionally fails if any required distribution asset is missing or does not match the bundle ID.
+The packaging command intentionally fails if any required distribution asset is missing or does not match the bundle ID. It also strips inherited quarantine metadata before signing because App Store processing rejects that extended attribute anywhere in the package payload.

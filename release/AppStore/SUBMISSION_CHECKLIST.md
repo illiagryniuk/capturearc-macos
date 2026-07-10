@@ -21,7 +21,8 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 - [x] Version/build are newer than every uploaded build
 - [x] Final `.pkg` passes local signature and package validation
 - [x] Universal binary still contains both arm64 and x86_64 slices
-- [ ] Final `.pkg` passes Apple's upload validation
+- [x] Final `.pkg` passes Apple's upload validation as build 1.0.0 (2)
+- [x] Processed build 1.0.0 (2) attached to macOS version 1.0
 
 ## Store listing
 
@@ -29,17 +30,17 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 - [x] Public Privacy Policy URL works without sign-in
 - [x] Public Support URL works without sign-in
 - [x] App privacy answer is “Data Not Collected” and still matches the binary
-- [ ] Saved “Data Not Collected” privacy disclosure published
+- [x] Saved “Data Not Collected” privacy disclosure published
 - [x] Export compliance answer matches the binary
 - [x] Content-rights answer completed
 - [x] Five 2880×1800 screenshots uploaded and verified in order
-- [ ] App Review contact name, email, and phone entered
+- [x] App Review contact name, email, and phone entered
 - [x] Review notes entered; no demo account required
 
 ## Product decisions
 
 - [x] Price confirmed: free (USD 0.00 across all 175 price regions)
-- [ ] Territories confirmed
+- [x] Territories confirmed: all 175 countries and regions
 - [x] Automatic, manual, or scheduled release confirmed: manual
 - [x] Phased release decision confirmed: not enabled for the initial manual release
 - [x] macOS minimum version confirmed as 13.0
