@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CaptureArc Support</title>
+  <style>
+    :root { color-scheme: dark; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    body { margin: 0; background: #080b16; color: #f6f7fb; }
+    main { width: min(820px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0 96px; }
+    h1 { font-size: clamp(36px, 7vw, 58px); letter-spacing: -0.04em; margin-bottom: 12px; }
+    h2 { margin-top: 42px; }
+    p, li { color: #bcc3d5; font-size: 17px; line-height: 1.65; }
+    .step { border: 1px solid #29304b; border-radius: 20px; padding: 20px 22px; margin: 14px 0; background: #111629; }
+    kbd { border: 1px solid #525b77; border-bottom-width: 2px; border-radius: 6px; padding: 2px 6px; color: #fff; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>CaptureArc Support</h1>
+    <p>CaptureArc watches one folder you authorize and brings new captures to a shelf at the top of your screen.</p>
+    <h2>First-time setup</h2>
+    <div class="step">1. Open CaptureArc and choose <strong>Authorize Capture Folder…</strong>.</div>
+    <div class="step">2. Press <kbd>Shift</kbd> + <kbd>Command</kbd> + <kbd>5</kbd> and open <strong>Options</strong>.</div>
+    <div class="step">3. Under <strong>Save to</strong>, choose <strong>Other Location…</strong> and select the same folder.</div>
+    <div class="step">4. Take a screenshot. Hover over or click the colored rim around the notch to open the shelf.</div>
+    <h2>If a capture does not appear</h2>
+    <ul>
+      <li>Confirm macOS Screenshot and CaptureArc use the same folder.</li>
+      <li>Open CaptureArc Settings and choose Rescan Now.</li>
+      <li>If the folder was moved or renamed, choose Change Capture Folder… and authorize it again.</li>
+      <li>Clipboard-only screenshots do not create a file and cannot appear in the shelf.</li>
+    </ul>
+    <h2>Contact</h2>
+    <p>If these steps do not help, <a href="https://github.com/illiagryniuk/capturearc-macos/issues/new?labels=support&amp;template=support-request.md">open a support request</a>. Do not attach private screenshots; describe the behavior and your macOS version instead.</p>
+    <p><a href="./">CaptureArc</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a></p>
+  </main>
+</body>
+</html>

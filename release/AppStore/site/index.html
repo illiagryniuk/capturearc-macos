@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CaptureArc keeps screenshots and screen recordings one hover away at your MacBook notch.">
+  <title>CaptureArc — Screenshot Shelf for macOS</title>
+  <style>
+    :root { color-scheme: dark; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(circle at 15% 0%, #0b3654 0, #0b1025 34%, #080815 72%); color: #f7f8fc; }
+    main { width: min(1080px, calc(100% - 40px)); margin: 0 auto; padding: 80px 0 92px; }
+    nav { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .brand { display: flex; gap: 14px; align-items: center; font-size: 20px; font-weight: 700; }
+    .brand img { width: 48px; height: 48px; border-radius: 13px; }
+    nav .links { display: flex; flex-wrap: wrap; gap: 22px; }
+    a { color: #72dcff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .hero { padding: 110px 0 70px; text-align: center; }
+    h1 { margin: 0 auto 24px; max-width: 900px; font-size: clamp(54px, 8vw, 96px); line-height: .98; letter-spacing: -.055em; }
+    .hero p { max-width: 700px; margin: 0 auto; color: #c5cada; font-size: clamp(20px, 3vw, 27px); line-height: 1.45; }
+    .accent { width: 220px; height: 7px; margin: 38px auto; border-radius: 99px; background: linear-gradient(90deg, #27dcff, #8b4dff); }
+    .preview { width: 100%; margin: 38px 0 90px; border: 1px solid #3d55a0; border-radius: 28px; box-shadow: 0 36px 100px #000a; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { padding: 26px; border: 1px solid #29304c; border-radius: 22px; background: #111529cc; }
+    .card h2 { margin: 0 0 10px; font-size: 22px; }
+    .card p { margin: 0; color: #b7bed2; line-height: 1.6; }
+    footer { margin-top: 80px; padding-top: 30px; border-top: 1px solid #252b42; color: #929ab2; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; }
+    footer div { display: flex; gap: 20px; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } nav { align-items: flex-start; } .hero { padding-top: 78px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <div class="brand"><img src="capturearc-icon.png" alt="">CaptureArc</div>
+      <div class="links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="support.html">Support</a></div>
+    </nav>
+    <section class="hero">
+      <h1>Your screenshots, right at the notch.</h1>
+      <div class="accent"></div>
+      <p>CaptureArc gives screenshots and screen recordings a native shelf at the top of your Mac—ready to drag, share, copy, reveal, or clean up.</p>
+    </section>
+    <img class="preview" src="01-screenshot-shelf.png" alt="CaptureArc screenshot shelf surrounding the MacBook notch">
+    <section class="grid" aria-label="CaptureArc features">
+      <article class="card"><h2>Quiet until needed</h2><p>A subtle color rim hugs the notch. Hover or click it to open the full shelf.</p></article>
+      <article class="card"><h2>Native workflow</h2><p>Use macOS drag and drop, Quick Look, Share, Copy, Reveal, and Move to Trash.</p></article>
+      <article class="card"><h2>Private by design</h2><p>No account or cloud upload. CaptureArc watches only the folder you explicitly authorize.</p></article>
+    </section>
+    <footer>
+      <span>© 2026 CaptureArc</span>
+      <div><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="support.html">Support</a></div>
+    </footer>
+  </main>
+</body>
+</html>

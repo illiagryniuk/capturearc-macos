@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: CaptureArc Support
+    url: https://illiagryniuk.github.io/capturearc-macos/support.html
+    about: Setup help and troubleshooting guidance
+  - name: CaptureArc Privacy Policy
+    url: https://illiagryniuk.github.io/capturearc-macos/privacy.html
+    about: Learn how CaptureArc handles files and data

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">CaptureArc logo mark</title>
+  <desc id="desc">A screenshot card follows a luminous arc into a colorful rim around a MacBook notch.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1f39"/>
+      <stop offset="0.58" stop-color="#090b1a"/>
+      <stop offset="1" stop-color="#140929"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#21d1ed"/>
+      <stop offset="0.52" stop-color="#6466f2"/>
+      <stop offset="1" stop-color="#7d3beb"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ccd6fa"/>
+    </linearGradient>
+  </defs>
+  <rect x="38" y="38" width="948" height="948" rx="218" fill="url(#background)" stroke="#ffffff" stroke-opacity=".13" stroke-width="5"/>
+  <path d="M688 438C720 548 650 662 560 716" fill="none" stroke="url(#accent)" stroke-width="18" stroke-linecap="round"/>
+  <g transform="translate(700 350) rotate(-8)">
+    <rect x="-174" y="-128" width="348" height="256" rx="50" fill="url(#card)" stroke="#fff" stroke-opacity=".72" stroke-width="5"/>
+    <rect x="-138" y="-90" width="276" height="176" rx="30" fill="#15192e"/>
+    <rect x="-116" y="-30" width="232" height="86" rx="22" fill="url(#accent)"/>
+    <circle cx="-97" cy="67" r="7" fill="#21d1ed"/>
+    <circle cx="-65" cy="67" r="7" fill="#6466f2"/>
+    <circle cx="-33" cy="67" r="7" fill="#7d3beb"/>
+    <rect x="-112" y="-68" width="142" height="12" rx="6" fill="#fff" fill-opacity=".68"/>
+    <rect x="42" y="-68" width="72" height="12" rx="6" fill="#21d1ed" fill-opacity=".92"/>
+  </g>
+  <path d="M330 986V796C330 736 366 700 422 700H602C658 700 694 736 694 796V986Z" fill="#040509"/>
+  <path d="M310 958V790C310 722 350 680 414 680H610C674 680 714 722 714 790V958" fill="none" stroke="url(#accent)" stroke-width="23" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="560" cy="714" r="24" fill="#fff"/>
+</svg>
