@@ -17,11 +17,16 @@ INFO_PLIST="$APP_CONTENTS/Info.plist"
 ENTITLEMENTS="$ROOT_DIR/Resources/Entitlements/AppStore.entitlements"
 EFFECTIVE_ENTITLEMENTS="$DIST_DIR/AppStore.effective.entitlements"
 PROFILE_PATH="${APP_STORE_PROVISIONING_PROFILE:-}"
+SIGNING_KEYCHAIN="${APP_STORE_SIGNING_KEYCHAIN:-}"
 
 find_identity() {
   local policy="$1"
   local pattern="$2"
-  /usr/bin/security find-identity -v -p "$policy" 2>/dev/null \
+  local keychain_args=()
+  if [[ -n "$SIGNING_KEYCHAIN" ]]; then
+    keychain_args+=("$SIGNING_KEYCHAIN")
+  fi
+  /usr/bin/security find-identity -v -p "$policy" "${keychain_args[@]}" 2>/dev/null \
     | /usr/bin/sed -n "s/.*\"\($pattern[^\"]*\)\".*/\1/p" \
     | /usr/bin/head -n 1
 }
@@ -96,14 +101,18 @@ if [[ -z "$APP_SIGNING_IDENTITY" ]]; then
   exit 1
 fi
 
-/usr/bin/codesign \
-  --force \
-  --deep \
-  --options runtime \
-  --timestamp=none \
-  --entitlements "$EFFECTIVE_ENTITLEMENTS" \
-  --sign "$APP_SIGNING_IDENTITY" \
-  "$APP_BUNDLE"
+codesign_args=(
+  --force
+  --deep
+  --options runtime
+  --timestamp=none
+  --entitlements "$EFFECTIVE_ENTITLEMENTS"
+  --sign "$APP_SIGNING_IDENTITY"
+)
+if [[ -n "$SIGNING_KEYCHAIN" ]]; then
+  codesign_args+=(--keychain "$SIGNING_KEYCHAIN")
+fi
+/usr/bin/codesign "${codesign_args[@]}" "$APP_BUNDLE"
 
 /usr/bin/codesign --verify --deep --strict --verbose=2 "$APP_BUNDLE"
 /usr/bin/plutil -lint "$INFO_PLIST" "$APP_RESOURCES/PrivacyInfo.xcprivacy" "$EFFECTIVE_ENTITLEMENTS"
@@ -139,9 +148,15 @@ case "$MODE" in
       exit 1
     fi
 
+    productbuild_args=(
+      --component "$APP_BUNDLE" /Applications
+      --sign "$INSTALLER_IDENTITY"
+    )
+    if [[ -n "$SIGNING_KEYCHAIN" ]]; then
+      productbuild_args+=(--keychain "$SIGNING_KEYCHAIN")
+    fi
     /usr/bin/productbuild \
-      --component "$APP_BUNDLE" /Applications \
-      --sign "$INSTALLER_IDENTITY" \
+      "${productbuild_args[@]}" \
       "$DIST_DIR/$APP_NAME-1.0.0.pkg"
     ;;
   *)

@@ -4,7 +4,7 @@ Validated on 2026-07-10 on Apple silicon with macOS 26.5.1 and a built-in notche
 
 ## Validation summary
 
-CaptureArc now passes package build, unit tests, signed-bundle integrity checks, and live functional QA for the requested screenshot, shelf, animation, settings, and Launch at Login flows. A separate sandboxed Mac App Store candidate has also been assembled and tested. Distribution remains blocked by Apple account and signing prerequisites documented in `release/AppStore/READINESS.md`.
+CaptureArc now passes package build, unit tests, signed-bundle integrity checks, and live functional QA for the requested screenshot, shelf, animation, settings, and Launch at Login flows. A distribution-signed, sandboxed Mac App Store app and installer have been assembled. The App Store record, free price, listing draft, privacy answer, and screenshots are prepared; the owner-confirmed steps still needed are documented in `release/AppStore/READINESS.md`.
 
 ## Commands detected
 
@@ -24,6 +24,8 @@ CaptureArc now passes package build, unit tests, signed-bundle integrity checks,
 - `codesign -dvvv --entitlements - dist/AppStore/CaptureArc.app` — confirmed the minimal App Sandbox, app-scoped bookmark, and user-selected read/write entitlements.
 - `plutil -lint` — passed for both Info plists, the privacy manifest, and App Store entitlements.
 - `lipo -info dist/AppStore/CaptureArc.app/Contents/MacOS/CaptureArc` — confirmed arm64 and x86_64 slices.
+- `pkgutil --check-signature dist/AppStore/CaptureArc-1.0.0.pkg` — confirmed an Apple-issued Mac Installer Distribution signature and valid Apple certificate chain.
+- Embedded provisioning-profile inspection — confirmed the app identifier and team match `com.illiagryniuk.capturearc`.
 - `sfltool dumpbtm` — previously confirmed the CaptureArc login-item record during the successful on/off registration round trip. The final build was inspected without changing the user's current enabled state.
 - `/usr/sbin/screencapture -p` — exercised the real macOS default screenshot destination and floating-thumbnail path.
 
@@ -33,7 +35,7 @@ CaptureArc now passes package build, unit tests, signed-bundle integrity checks,
 - The standard folder picker granted access to `~/Pictures/CaptureArc Captures`; a real new screenshot was detected, classified, and displayed in the shelf.
 - After a full quit and relaunch, the app-scoped security bookmark restored access without another prompt.
 - The App Store build exposed only three entitlements: App Sandbox, app-scoped bookmarks, and user-selected read/write file access.
-- Five store screenshots were generated at Apple's accepted 2880×1800 size. Store name, subtitle, and keywords fit their limits; promotional text is 167 characters.
+- Five store screenshots were generated at Apple's accepted 2880×1800 size, uploaded, and ordered from `01` through `05`. Store name, subtitle, and keywords fit their limits; promotional text is 167 characters.
 - Resolved the actual macOS Screenshot destination read-only, with `~/Desktop` fallback when no explicit location preference exists.
 - Watched the automatic macOS source and the optional authorized folder simultaneously.
 - Ignored an ordinary Desktop PNG whose Spotlight screen-capture metadata was absent; the supported capture count stayed unchanged through the immediate, +1 second, and +3 second scans.
@@ -50,13 +52,13 @@ CaptureArc now passes package build, unit tests, signed-bundle integrity checks,
 
 ## Failed checks
 
-- The Mac App Store candidate is signed with Apple Development for local QA. Final packaging correctly remains unavailable until Apple Distribution, Mac Installer Distribution, and provisioning-profile assets exist.
+- None in local build, test, signing, packaging, or functional validation.
 
 ## Skipped checks
 
 - Lint — no lint command or configuration exists in the project.
 - Separate typecheck — no standalone typecheck command exists; `swift build` compiled all production sources.
-- App Store upload and TestFlight — blocked by account agreements, App Store record creation, and distribution signing assets.
+- App Store upload and TestFlight — pending owner authorization to install/use Apple's Transporter uploader, followed by Apple's build processing.
 - Real logout/login cycle — registration state and Background Task Management state were verified, but the Mac was not logged out during QA.
 - Reduce Motion and Reduce Transparency — code paths and reduced-motion timing are covered, but the system accessibility settings were not toggled live.
 - External-display, multiple-display, full-screen-app, and every-Space visual QA — geometry has unit coverage, but live QA used the built-in notched display.
@@ -64,7 +66,7 @@ CaptureArc now passes package build, unit tests, signed-bundle integrity checks,
 
 ## Build result
 
-Passed. `dist/CaptureArc.app` is a valid native local build and `dist/AppStore/CaptureArc.app` is a universal arm64 + x86_64 bundle signed for development with hardened runtime enabled. The App Store candidate has App Sandbox enabled, contains `PrivacyInfo.xcprivacy`, and declares macOS 13.0 as the minimum system version.
+Passed. `dist/CaptureArc.app` is a valid native local build. `dist/AppStore/CaptureArc.app` is a universal arm64 + x86_64 bundle signed with the Apple-issued Mac App Distribution identity and matching provisioning profile. `dist/AppStore/CaptureArc-1.0.0.pkg` is signed with the Apple-issued Mac Installer Distribution identity and has a valid Apple certificate chain. The App Store candidate has App Sandbox enabled, contains `PrivacyInfo.xcprivacy`, and declares macOS 13.0 as the minimum system version.
 
 ## Test result
 
@@ -81,5 +83,5 @@ Passed through `swift build`; there is no separate typecheck target.
 ## Blockers
 
 - No blocker for PR or local product review.
-- Mac App Store distribution is blocked by the Apple agreement/compliance steps, public support/privacy URLs, final distribution certificates/profile, and owner release decisions listed in `release/AppStore/READINESS.md`.
+- Mac App Store upload is pending the four owner-confirmed actions listed in `release/AppStore/READINESS.md`; the account, public URLs, distribution certificates, profile, signed installer, free price, and listing draft are prepared.
 - Manual user approval is required before any release, deployment, merge, or public distribution.
