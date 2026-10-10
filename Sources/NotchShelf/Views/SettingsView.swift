@@ -11,9 +11,6 @@ struct SettingsView: View {
     let onReselectFolder: () -> Void
     let onRescan: () -> Void
 
-    @AppStorage(PreferenceKeys.hoverDelayMilliseconds)
-    private var hoverDelayMilliseconds = 200.0
-
     @AppStorage(PreferenceKeys.animateNewCaptures)
     private var animateNewCaptures = true
 
@@ -132,23 +129,9 @@ struct SettingsView: View {
 
     private var shelfSection: some View {
         Section("Shelf") {
-            LabeledContent("Hover delay") {
-                HStack(spacing: 10) {
-                    Slider(
-                        value: $hoverDelayMilliseconds,
-                        in: 150...500,
-                        step: 10
-                    )
-                    .frame(width: 190)
-                    .accessibilityLabel("Shelf hover delay")
-                    .accessibilityValue("\(Int(hoverDelayMilliseconds)) milliseconds")
-                    .help("How long the pointer rests near the notch before the shelf opens")
-
-                    Text("\(Int(hoverDelayMilliseconds)) ms")
-                        .monospacedDigit()
-                        .foregroundStyle(.secondary)
-                        .frame(width: 58, alignment: .trailing)
-                }
+            LabeledContent("Open shelf") {
+                Text("Push the pointer into the notch")
+                    .foregroundStyle(.secondary)
             }
 
             Toggle("Animate new captures into the notch", isOn: $animateNewCaptures)
@@ -246,8 +229,8 @@ struct SettingsView: View {
 
     private var privacyDescription: String {
         if requiresExplicitCaptureFolderAuthorization {
-            return "CaptureArc watches only the folder you authorize. It does not record your screen and does not need Screen Recording, Accessibility, or Full Disk Access."
+            return "CaptureArc watches the capture folder you authorize and opens only the additional File Shelf folders you choose. It does not record your screen and does not need Screen Recording, Accessibility, or Full Disk Access."
         }
-        return "CaptureArc watches the folder macOS already uses for screenshots plus any additional folder you choose. It does not record your screen and does not need Screen Recording, Accessibility, or Full Disk Access."
+        return "CaptureArc watches the folder macOS uses for screenshots and opens only the additional folders you choose. It does not record your screen and does not need Screen Recording, Accessibility, or Full Disk Access."
     }
 }

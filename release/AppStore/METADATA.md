@@ -7,7 +7,7 @@
 - Bundle ID: `com.illiagryniuk.capturearc`
 - SKU suggestion: `capturearc-macos-001`
 - Version: `1.0.0`
-- Build: `1`
+- Next candidate build: `3`
 - Primary category: Utilities
 - Secondary category: Productivity
 - Age rating: 4+
@@ -17,13 +17,13 @@
 
 ## Promotional text
 
-Take a screenshot and keep moving. CaptureArc places recent captures at your MacBook notch so you can drag, share, copy, reveal, or clean up without hunting for files.
+Keep screenshots and favorite folders at your MacBook notch. Drag, open, share, copy, reveal, or clean up without hunting through Finder.
 
 ## Description
 
 CaptureArc gives screenshots and screen recordings a natural home at the top of your screen.
 
-Take a capture with the built-in macOS tools. When the file lands in the folder you approved, CaptureArc continues the motion into a native shelf built around the MacBook notch. Hover or click the notch to bring recent captures back whenever you need them.
+Take a capture with the built-in macOS tools. When the file lands in the folder you approved, CaptureArc continues the motion into a native shelf built around the MacBook notch. Push the pointer into the notch to open it; simply moving nearby will not interrupt your work.
 
 DO MORE WITHOUT BREAKING YOUR FLOW
 
@@ -34,13 +34,21 @@ DO MORE WITHOUT BREAKING YOUR FLOW
 • Move finished captures to the Trash
 • Choose how long new captures stay in the shelf
 
+KEEP FOLDERS CLOSE
+
+• Switch between dedicated Screenshots and Files sections
+• Add multiple folders as tabs and restore them after relaunch
+• Browse folders in a familiar Finder-style list
+• Double-click files to open them in their default Mac apps
+• Jump back to Finder whenever you need the full file browser
+
 BUILT FOR MACOS
 
 CaptureArc uses native menus, sharing, Quick Look, drag and drop, and Launch at Login. On a Mac without a notch, it uses a compact top-center shelf instead.
 
 PRIVATE BY DESIGN
 
-CaptureArc does not record your screen. It watches only the folder you explicitly authorize, and all processing stays on your Mac. No account, analytics profile, cloud upload, Screen Recording permission, Accessibility permission, or Full Disk Access is required.
+CaptureArc does not record your screen. It accesses only the capture folder and File Shelf folders you explicitly authorize, and all processing stays on your Mac. No account, analytics profile, cloud upload, Screen Recording permission, Accessibility permission, or Full Disk Access is required.
 
 SETUP
 

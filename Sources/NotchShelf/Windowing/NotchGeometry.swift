@@ -5,11 +5,11 @@ import OSLog
 /// Geometry for the shelf on one display, expressed in AppKit's global screen
 /// coordinate space (origin at the bottom-left of the primary display).
 struct NotchGeometry {
-    static let defaultExpandedSize = CGSize(width: 680, height: 438)
+    static let defaultExpandedSize = CGSize(width: 820, height: 540)
 
     /// The physical camera housing remains untouched. The collapsed window is
-    /// deliberately larger than the visible idle rim so hover and click remain
-    /// forgiving; pixels away from the rim are transparent.
+    /// deliberately larger than the visible idle rim so it can draw around the
+    /// notch, while activation remains limited to the camera-housing footprint.
     static let notchShoulderWidth: CGFloat = 44
     static let notchBottomBridgeHeight: CGFloat = 18
     static let notchCutoutClearance: CGFloat = 2
@@ -19,7 +19,7 @@ struct NotchGeometry {
     let visibleFrame: CGRect
     let physicalNotchRect: CGRect?
     let collapsedPanelRect: CGRect
-    let triggerRect: CGRect
+    let activationRect: CGRect
     let expandedPanelRect: CGRect
     let contentTopInset: CGFloat
     let notchCutoutSize: CGSize
@@ -66,7 +66,7 @@ struct NotchGeometry {
             expandedSize: expandedSize
         )
         collapsedPanelRect = layout.collapsedPanelRect
-        triggerRect = layout.triggerRect
+        activationRect = layout.activationRect
         expandedPanelRect = layout.expandedPanelRect
         contentTopInset = layout.contentTopInset
         notchCutoutSize = layout.notchCutoutSize
@@ -74,7 +74,7 @@ struct NotchGeometry {
 
     struct PanelLayout: Equatable {
         let collapsedPanelRect: CGRect
-        let triggerRect: CGRect
+        let activationRect: CGRect
         let expandedPanelRect: CGRect
         let contentTopInset: CGFloat
         let notchCutoutSize: CGSize
@@ -89,7 +89,7 @@ struct NotchGeometry {
         expandedSize: CGSize = defaultExpandedSize
     ) -> PanelLayout {
         let collapsedPanelRect: CGRect
-        let triggerRect: CGRect
+        let activationRect: CGRect
         let contentTopInset: CGFloat
         let notchCutoutSize: CGSize
 
@@ -121,10 +121,9 @@ struct NotchGeometry {
                 )
             )
             contentTopInset = collapsedPanelRect.height
-            triggerRect = clamp(
-                collapsedPanelRect.insetBy(dx: -10, dy: -10),
-                to: screenFrame
-            )
+            // Opening is deliberate: the pointer must enter the physical
+            // camera-housing footprint, not merely approach its shoulders.
+            activationRect = notch.intersection(screenFrame).integral
         } else {
             let pillSize = CGSize(width: 188, height: 30)
             let pill = CGRect(
@@ -137,10 +136,7 @@ struct NotchGeometry {
             collapsedPanelRect = clampPosition(pill, to: screenFrame).integral
             notchCutoutSize = .zero
             contentTopInset = collapsedPanelRect.height
-            triggerRect = clamp(
-                collapsedPanelRect.insetBy(dx: -18, dy: -12),
-                to: screenFrame
-            )
+            activationRect = collapsedPanelRect
         }
 
         let width = min(max(420, expandedSize.width), max(1, screenFrame.width - 24))
@@ -159,7 +155,7 @@ struct NotchGeometry {
 
         return PanelLayout(
             collapsedPanelRect: collapsedPanelRect,
-            triggerRect: triggerRect,
+            activationRect: activationRect,
             expandedPanelRect: expandedPanelRect,
             contentTopInset: contentTopInset,
             notchCutoutSize: notchCutoutSize
@@ -239,10 +235,6 @@ struct NotchGeometry {
     private static func displayID(for screen: NSScreen) -> CGDirectDisplayID {
         (screen.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? NSNumber)
             .map { CGDirectDisplayID($0.uint32Value) } ?? 0
-    }
-
-    private static func clamp(_ rect: CGRect, to bounds: CGRect) -> CGRect {
-        rect.intersection(bounds)
     }
 
     private static func clampPosition(_ rect: CGRect, to bounds: CGRect) -> CGRect {

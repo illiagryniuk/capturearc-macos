@@ -1,8 +1,8 @@
 # CaptureArc Mac App Store readiness
 
-Status: **Ready for owner-approved review submission**
+Status: **Ready for owner hands-on QA; upload held for approval**
 
-The app, App Store record, free pricing, listing, public support pages, privacy disclosure, worldwide availability, review contact, and distribution-signed installer are prepared. Apple processed build 1.0.0 (2) successfully, and it is attached to macOS version 1.0. App Store Connect enables **Add for Review** with no unresolved validation blocker.
+The updated app, free App Store record, listing copy, support/privacy drafts, and distribution-signed installer are prepared. Apple previously processed build 1.0.0 (2), but that build is now superseded by the local build 1.0.0 (3), which contains exact-notch activation and the new persistent Files shelf. Build 3 is intentionally not uploaded until owner testing and explicit release approval.
 
 ## Completed locally
 
@@ -19,6 +19,11 @@ The app, App Store record, free pricing, listing, public support pages, privacy 
 - Release build and strict code-signature verification
 - Universal Apple silicon + Intel release binary
 - Automated test suite
+- Exact physical-notch activation with the surrounding collapsed panel ignoring mouse events
+- Larger 820×540 shelf with Screenshots and Files sections
+- Multiple persistent folder tabs, Finder-style browsing, nested navigation, default-app opening, and Finder reveal
+- Local bookmark persistence and restoration test coverage
+- Visual inspection of the Files workspace and native folder picker in both local and App Sandbox configurations
 - Live sandbox test: authorize folder, detect a new screenshot, show it in the shelf, relaunch, and restore access
 - Apple Developer Program agreement accepted and Digital Services Act status active
 - Free Apps Agreement active; no paid agreement is required while CaptureArc remains free and has no in-app purchases
@@ -39,11 +44,13 @@ The app, App Store record, free pricing, listing, public support pages, privacy 
 - Build 1.0.0 (2) completed Apple processing and was attached to version 1.0
 - Final version draft saved with **Add for Review** enabled
 
-## Remaining human release gate
+## Remaining release work
 
-1. Optionally install build 2 through TestFlight for a second-Mac/user smoke test.
-2. The owner manually approves **Add for Review**.
-3. Inspect the generated review submission, then the owner manually approves **Submit for Review**.
+1. Owner tests the running local build, especially exact-notch activation and real folder tabs.
+2. Refresh at least one App Store screenshot to show the new Files section.
+3. Upload build 1.0.0 (3), wait for Apple processing, and attach it to macOS version 1.0.
+4. Optionally install build 3 through TestFlight for a second-Mac/user smoke test.
+5. The owner manually approves **Add for Review** and **Submit for Review**.
 
 ## Distribution build commands
 

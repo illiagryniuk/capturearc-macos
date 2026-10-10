@@ -21,8 +21,10 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 - [x] Version/build are newer than every uploaded build
 - [x] Final `.pkg` passes local signature and package validation
 - [x] Universal binary still contains both arm64 and x86_64 slices
-- [x] Final `.pkg` passes Apple's upload validation as build 1.0.0 (2)
-- [x] Processed build 1.0.0 (2) attached to macOS version 1.0
+- [x] Previous `.pkg` passed Apple's upload validation as build 1.0.0 (2)
+- [x] Updated build 1.0.0 (3) passes local universal-binary, entitlement, app-signature, and installer-signature checks
+- [ ] Build 1.0.0 (3) uploaded and processed by Apple
+- [ ] Processed build 1.0.0 (3) attached to macOS version 1.0
 
 ## Store listing
 
@@ -33,7 +35,8 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 - [x] Saved “Data Not Collected” privacy disclosure published
 - [x] Export compliance answer matches the binary
 - [x] Content-rights answer completed
-- [x] Five 2880×1800 screenshots uploaded and verified in order
+- [x] Five 2880×1800 screenshots for build 2 uploaded and verified in order
+- [ ] Refresh at least one screenshot to show the Files section before submitting build 3
 - [x] App Review contact name, email, and phone entered
 - [x] Review notes entered; no demo account required
 
@@ -53,6 +56,11 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 - [x] New screenshot appears and animates immediately toward the notch
 - [x] Authorization persists after quit/relaunch
 - [x] Drag, Share, Copy, Reveal, Quick Look, and Trash tested
+- [x] Shelf activates only inside the physical notch geometry in unit coverage
+- [x] Files workspace and native folder picker inspected in the App Sandbox configuration
+- [x] Folder-tab loading, nested navigation, local bookmark restoration, and close behavior covered by tests
+- [ ] Owner confirms exact-notch activation on the running local build
+- [ ] Owner confirms real folder add/open/relaunch/close behavior with their chosen folders
 - [ ] Launch at Login tested in the distribution-signed build
 - [ ] Notch and no-notch display behavior tested
 - [ ] Reduced Motion behavior tested

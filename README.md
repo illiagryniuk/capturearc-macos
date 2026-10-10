@@ -1,14 +1,16 @@
 # CaptureArc
 
-CaptureArc is a privacy-first macOS utility that keeps screenshots and screen recordings in a native shelf built around the MacBook notch (or a top-center pill on displays without a notch).
+CaptureArc is a privacy-first macOS utility that keeps screenshots, screen recordings, and favorite folders in a native shelf built around the MacBook notch (or a top-center pill on displays without a notch).
 
 ## MVP behavior
 
 - The direct/local build follows the current macOS Screenshot destination automatically and can also watch one optional user-selected folder.
-- The Mac App Store build watches one folder explicitly authorized through the standard macOS folder picker, as required by App Sandbox.
+- The Mac App Store build watches a capture folder explicitly authorized through the standard macOS folder picker, as required by App Sandbox.
 - Filters the automatic source using macOS screen-capture metadata, so ordinary Desktop images are not added to the shelf.
 - Waits for image and movie files to finish writing before indexing them.
-- Opens a native shelf when the pointer rests over the notch.
+- Opens only when the pointer is pushed into the physical notch; approaching the notch is not enough.
+- Includes separate Screenshots and Files sections in a larger shelf.
+- Keeps multiple user-selected folders as local, persistent tabs with Finder-style browsing and file opening.
 - Hands the macOS floating thumbnail off from the lower-right corner into the notch after the system thumbnail finishes, with a reduced-motion alternative.
 - Supports multi-selection, keyboard actions, Quick Look, file-URL dragging, native sharing, Finder reveal, copying, and moving files to Trash.
 - Supports Launch at Login through the native macOS login-item service.
