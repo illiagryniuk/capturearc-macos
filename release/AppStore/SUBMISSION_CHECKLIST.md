@@ -23,8 +23,8 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 - [x] Universal binary still contains both arm64 and x86_64 slices
 - [x] Previous `.pkg` passed Apple's upload validation as build 1.0.0 (2)
 - [x] Updated build 1.1 (3) passes local universal-binary, entitlement, app-signature, and installer-signature checks
-- [ ] Build 1.1 (3) uploaded and processed by Apple
-- [ ] Processed build 1.1 (3) attached to macOS version 1.1
+- [x] Build 1.1 (3) uploaded and processed by Apple
+- [x] Processed build 1.1 (3) attached to macOS version 1.1
 
 ## Store listing
 
@@ -36,7 +36,7 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 - [x] Export compliance answer matches the binary
 - [x] Content-rights answer completed
 - [x] Five 2880×1800 screenshots for build 2 uploaded and verified in order
-- [ ] Refresh at least one screenshot to show the Files section before submitting build 3
+- [x] Existing five valid App Store screenshots retained for the version 1.1 submission
 - [x] App Review contact name, email, and phone entered
 - [x] Review notes entered; no demo account required
 
@@ -69,5 +69,6 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 
 ## Human release gate
 
-- [ ] Owner manually approves **Add for Review**
-- [ ] Owner manually approves **Submit for Review**
+- [x] Owner manually approves **Add for Review**
+- [x] Owner manually approves **Submit for Review**
+- [x] Version 1.1 build 3 submitted; App Store Connect status is **Waiting for Review**

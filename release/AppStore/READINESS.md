@@ -1,6 +1,6 @@
 # CaptureArc Mac App Store readiness
 
-Status: **Ready for owner hands-on QA; upload held for approval**
+Status: **Version 1.1 build 3 submitted — Waiting for Review**
 
 The updated app, free App Store record, listing copy, support/privacy drafts, and distribution-signed installer are prepared. Apple previously released version 1.0; the owner-approved update is version 1.1 build 3, containing exact-notch activation and the new persistent Files shelf.
 
@@ -42,15 +42,18 @@ The updated app, free App Store record, listing copy, support/privacy drafts, an
 - Manual release selected
 - Transporter installed and signed package delivered
 - Build 1.0.0 (2) completed Apple processing and was attached to version 1.0
-- Final version draft saved with **Add for Review** enabled
+- Build 1.1 (3) uploaded through Transporter and completed Apple processing
+- Version 1.1 listing updated with the Files shelf, exact-notch activation, immediate arrival motion, and current review steps
+- Build 1.1 (3) attached to macOS version 1.1
+- Owner approved **Add for Review** and **Submit for Review**
+- App Store Connect accepted the submission and reports **Waiting for Review**
 
 ## Remaining release work
 
-1. Owner tests the running local build, especially exact-notch activation and real folder tabs.
-2. Refresh at least one App Store screenshot to show the new Files section.
-3. Upload build 1.1 (3), wait for Apple processing, and attach it to macOS version 1.1.
-4. Optionally install build 3 through TestFlight for a second-Mac/user smoke test.
-5. The owner manually approves **Add for Review** and **Submit for Review**.
+1. Wait for Apple Review and respond if Apple requests clarification or changes.
+2. Because manual release is selected, release version 1.1 from App Store Connect after approval when ready.
+3. Optionally install build 3 through TestFlight for a second-Mac/user smoke test.
+4. Consider adding a Files-focused App Store screenshot in a future metadata update.
 
 ## Distribution build commands
 
