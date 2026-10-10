@@ -228,7 +228,7 @@ struct OnboardingView: View {
 
     private var headerDescription: String {
         if requiresExplicitCaptureFolderAuthorization {
-            return "CaptureArc keeps screenshots local. App Store security requires you to approve the one folder it watches."
+            return "CaptureArc keeps files local. App Store security requires you to approve each folder CaptureArc uses."
         }
         return "CaptureArc normally follows the macOS screenshot folder automatically. If that location is unavailable, choose a fallback folder here."
     }
@@ -249,7 +249,7 @@ struct OnboardingView: View {
 
     private var privacyDescription: String {
         if requiresExplicitCaptureFolderAuthorization {
-            return "CaptureArc does not capture your screen. It reads only the folder you authorize, and your captures stay on your Mac."
+            return "CaptureArc does not capture your screen. It reads only the capture folder and File Shelf folders you authorize, and your files stay on your Mac."
         }
         return "CaptureArc does not capture your screen. It reads the current macOS Screenshot destination and any fallback folder you explicitly authorize; your captures stay on your Mac."
     }

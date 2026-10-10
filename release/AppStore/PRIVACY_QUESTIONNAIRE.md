@@ -6,7 +6,7 @@ Use these answers for version 1.0 after verifying that no analytics or network S
 - Tracking: **No**
 - Third-party advertising: **No**
 - Accounts: **None**
-- User content: files are read only from the folder the person authorizes and remain on the Mac; they are not transmitted to the developer or a third party.
+- User content: files are read only from folders the person authorizes and remain on the Mac; they are not transmitted to the developer or a third party.
 - Diagnostics: not transmitted.
 - Product interaction: not transmitted.
 - Identifiers: not collected.

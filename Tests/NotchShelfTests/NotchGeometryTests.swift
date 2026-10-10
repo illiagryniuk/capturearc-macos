@@ -41,7 +41,7 @@ final class NotchGeometryTests: XCTestCase {
         XCTAssertNil(notch)
     }
 
-    func testNotchedPanelKeepsWideInvisibleHitTargetAroundCameraHousing() {
+    func testNotchedPanelActivatesOnlyInsidePhysicalCameraHousing() {
         let frame = CGRect(x: 0, y: 0, width: 2_056, height: 1_329)
         let notch = CGRect(x: 918, y: 1_291, width: 220, height: 38)
 
@@ -59,12 +59,14 @@ final class NotchGeometryTests: XCTestCase {
         XCTAssertEqual(layout.notchCutoutSize, CGSize(width: 224, height: 40))
         XCTAssertEqual(layout.contentTopInset, 56)
         XCTAssertEqual(
-            layout.triggerRect,
-            CGRect(x: 864, y: 1_263, width: 328, height: 66)
+            layout.activationRect,
+            notch
         )
+        XCTAssertFalse(layout.activationRect.contains(CGPoint(x: 900, y: 1_300)))
+        XCTAssertTrue(layout.activationRect.contains(CGPoint(x: 1_028, y: 1_310)))
         XCTAssertEqual(
             layout.expandedPanelRect,
-            CGRect(x: 688, y: 891, width: 680, height: 438)
+            CGRect(x: 618, y: 789, width: 820, height: 540)
         )
     }
 
@@ -82,9 +84,10 @@ final class NotchGeometryTests: XCTestCase {
         )
         XCTAssertEqual(layout.notchCutoutSize, .zero)
         XCTAssertEqual(layout.contentTopInset, 30)
+        XCTAssertEqual(layout.activationRect, layout.collapsedPanelRect)
         XCTAssertEqual(
             layout.expandedPanelRect,
-            CGRect(x: 2_676, y: 642, width: 680, height: 438)
+            CGRect(x: 2_606, y: 540, width: 820, height: 540)
         )
     }
 

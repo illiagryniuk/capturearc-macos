@@ -105,8 +105,8 @@ struct NotchShelfSurfaceShape: Shape {
 }
 
 /// The idle affordance is intentionally only a stroked path. Its surrounding
-/// window remains large enough for reliable hover and click interaction, while
-/// every pixel away from this rim stays transparent.
+/// window remains large enough to draw the full rim, while every pixel away
+/// from this rim stays transparent and does not receive mouse events.
 struct NotchShelfIdleRimShape: Shape {
     var cutoutSize: CGSize
     var hasPhysicalNotch: Bool

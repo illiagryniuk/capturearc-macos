@@ -8,6 +8,7 @@ final class NotchPanelController {
     private let panel: NotchShelfPanel
     private let presentation: NotchPanelPresentation
     private let actions: CaptureActions
+    private let fileShelfStore: FileShelfStore
     private let hostingView: NSHostingView<NotchPanelRootView>
     private let arrivalAnimator: CaptureArrivalAnimator
     private var hoverMonitor: HoverMonitor!
@@ -15,8 +16,9 @@ final class NotchPanelController {
     private var previousFrontmostApplication: NSRunningApplication?
     private var isStarted = false
 
-    init(library: CaptureLibrary) {
+    init(library: CaptureLibrary, fileShelfStore: FileShelfStore) {
         self.library = library
+        self.fileShelfStore = fileShelfStore
         panel = NotchShelfPanel()
         presentation = NotchPanelPresentation()
         actions = CaptureActions(library: library)
@@ -25,6 +27,7 @@ final class NotchPanelController {
         let rootView = NotchPanelRootView(
             library: library,
             actions: actions,
+            fileStore: fileShelfStore,
             presentation: presentation
         )
         hostingView = NSHostingView(rootView: rootView)
@@ -64,7 +67,6 @@ final class NotchPanelController {
                 guard panel?.isVisible == true else { return nil }
                 return panel?.frame
             },
-            openDelay: { Self.hoverDelay },
             onOpen: { [weak self] in
                 self?.show(expanded: true)
             },
@@ -74,11 +76,15 @@ final class NotchPanelController {
             onScreenParametersChanged: { [weak self] in
                 self?.refreshGeometry()
             },
-            closeSuspensionProvider: { [weak actions] in
+            closeSuspensionProvider: { [weak actions, weak fileShelfStore] in
                 actions?.hasVisibleTransientUI == true
+                    || fileShelfStore?.isPresentingTransientUI == true
             }
         )
         actions.onTransientUIVisibilityChanged = { [weak self] isVisible in
+            self?.hoverMonitor.setCloseSuspended(isVisible)
+        }
+        fileShelfStore.onTransientUIVisibilityChanged = { [weak self] isVisible in
             self?.hoverMonitor.setCloseSuspended(isVisible)
         }
     }
@@ -122,6 +128,7 @@ final class NotchPanelController {
         presentation.notchCutoutSize = geometry.notchCutoutSize
         presentation.isExpanded = expanded
         hoverMonitor.setPanelExpanded(expanded)
+        panel.ignoresMouseEvents = !expanded
 
         let targetFrame = expanded
             ? geometry.expandedPanelRect
@@ -224,12 +231,6 @@ final class NotchPanelController {
         previousFrontmostApplication.activate(options: [])
     }
 
-    private static var hoverDelay: TimeInterval {
-        let milliseconds = UserDefaults.standard.double(
-            forKey: PreferenceKeys.hoverDelayMilliseconds
-        )
-        return min(max(milliseconds > 0 ? milliseconds : 200, 100), 800) / 1_000
-    }
 }
 
 @MainActor
@@ -263,8 +264,8 @@ private final class NotchShelfPanel: NSPanel {
         minSize = .zero
         acceptsMouseMovedEvents = true
         animationBehavior = .utilityWindow
-        title = "CaptureArc Screenshot Shelf"
-        setAccessibilityLabel("CaptureArc Screenshot Shelf")
+        title = "CaptureArc Shelf"
+        setAccessibilityLabel("CaptureArc Shelf")
     }
 
     override var canBecomeKey: Bool { true }
@@ -318,6 +319,7 @@ private final class NotchPanelPresentation: ObservableObject {
 private struct NotchPanelRootView: View {
     @ObservedObject var library: CaptureLibrary
     @ObservedObject var actions: CaptureActions
+    @ObservedObject var fileStore: FileShelfStore
     @ObservedObject var presentation: NotchPanelPresentation
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
@@ -335,6 +337,7 @@ private struct NotchPanelRootView: View {
                     CaptureShelfView(
                         library: library,
                         actions: actions,
+                        fileStore: fileStore,
                         onRequestClose: presentation.onRequestClose
                     )
                 }

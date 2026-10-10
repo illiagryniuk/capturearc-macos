@@ -10,6 +10,7 @@ final class AppRuntime: ObservableObject {
     static let shared = AppRuntime()
 
     let library: CaptureLibrary
+    let fileShelfStore: FileShelfStore
     let launchAtLoginService: LaunchAtLoginService
     let distributionChannel = DistributionChannel.current
 
@@ -36,13 +37,13 @@ final class AppRuntime: ObservableObject {
 
     private init() {
         self.library = CaptureLibrary()
+        self.fileShelfStore = FileShelfStore()
         self.launchAtLoginService = LaunchAtLoginService()
         self.managedCaptureKeys = Set(
             UserDefaults.standard.stringArray(forKey: PreferenceKeys.managedCaptureKeys) ?? []
         )
 
         UserDefaults.standard.register(defaults: [
-            PreferenceKeys.hoverDelayMilliseconds: 200.0,
             PreferenceKeys.animateNewCaptures: true,
             PreferenceKeys.retentionPolicy: RetentionPolicy.indefinitely.rawValue
         ])
@@ -61,7 +62,10 @@ final class AppRuntime: ObservableObject {
         guard !hasStarted else { return }
         hasStarted = true
 
-        let controller = NotchPanelController(library: library)
+        let controller = NotchPanelController(
+            library: library,
+            fileShelfStore: fileShelfStore
+        )
         panelController = controller
         controller.start()
 

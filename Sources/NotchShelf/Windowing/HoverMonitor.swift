@@ -10,7 +10,6 @@ final class HoverMonitor {
 
     private let geometryProvider: GeometryProvider
     private let panelFrameProvider: () -> CGRect?
-    private let openDelayProvider: () -> TimeInterval
     private let closeDelay: TimeInterval
     private let onOpen: () -> Void
     private let onClose: () -> Void
@@ -21,7 +20,6 @@ final class HoverMonitor {
     private var localMonitor: Any?
     private var applicationNotificationTokens: [NSObjectProtocol] = []
     private var workspaceNotificationTokens: [NSObjectProtocol] = []
-    private var pendingOpen: DispatchWorkItem?
     private var pendingClose: DispatchWorkItem?
     private var isCloseSuspended = false
     private(set) var isPanelExpanded = false
@@ -30,7 +28,6 @@ final class HoverMonitor {
     init(
         geometryProvider: @escaping GeometryProvider,
         panelFrameProvider: @escaping () -> CGRect?,
-        openDelay: @escaping () -> TimeInterval = { 0.20 },
         closeDelay: TimeInterval = 0.24,
         onOpen: @escaping () -> Void,
         onClose: @escaping () -> Void,
@@ -39,7 +36,6 @@ final class HoverMonitor {
     ) {
         self.geometryProvider = geometryProvider
         self.panelFrameProvider = panelFrameProvider
-        openDelayProvider = openDelay
         self.closeDelay = closeDelay
         self.onOpen = onOpen
         self.onClose = onClose
@@ -154,10 +150,7 @@ final class HoverMonitor {
 
     func setPanelExpanded(_ expanded: Bool) {
         isPanelExpanded = expanded
-        if expanded {
-            pendingOpen?.cancel()
-            pendingOpen = nil
-        } else {
+        if !expanded {
             pendingClose?.cancel()
             pendingClose = nil
         }
@@ -175,9 +168,9 @@ final class HoverMonitor {
 
         guard isPanelExpanded, !isCloseEffectivelySuspended else { return }
         let location = NSEvent.mouseLocation
-        let insideTrigger = geometryProvider(location)?.triggerRect.contains(location) ?? false
+        let insideActivation = geometryProvider(location)?.activationRect.contains(location) ?? false
         let insidePanel = panelFrameProvider()?.contains(location) ?? false
-        if !insideTrigger, !insidePanel {
+        if !insideActivation, !insidePanel {
             scheduleClose()
         }
     }
@@ -196,21 +189,19 @@ final class HoverMonitor {
         let isClick = event.type == .leftMouseDown
             || event.type == .rightMouseDown
             || event.type == .otherMouseDown
-        let isInsideTrigger = geometry.triggerRect.contains(location)
+        let isInsideActivation = geometry.activationRect.contains(location)
         let isInsidePanel = panelFrameProvider()?.contains(location) ?? false
 
-        if isInsideTrigger || (isPanelExpanded && isInsidePanel) {
+        if isInsideActivation || (isPanelExpanded && isInsidePanel) {
             pendingClose?.cancel()
             pendingClose = nil
 
-            if isInsideTrigger && !isPanelExpanded {
-                scheduleOpen()
+            if isInsideActivation && !isPanelExpanded {
+                hoverLogger.debug("Pointer entered notch; opening shelf")
+                onOpen()
             }
             return
         }
-
-        pendingOpen?.cancel()
-        pendingOpen = nil
 
         guard isPanelExpanded else { return }
         guard !isCloseEffectivelySuspended else { return }
@@ -219,26 +210,6 @@ final class HoverMonitor {
         } else {
             scheduleClose()
         }
-    }
-
-    private func scheduleOpen() {
-        guard pendingOpen == nil else { return }
-
-        let work = DispatchWorkItem { [weak self] in
-            guard let self, self.isRunning, !self.isPanelExpanded else { return }
-            self.pendingOpen = nil
-
-            let location = NSEvent.mouseLocation
-            guard self.geometryProvider(location)?.triggerRect.contains(location) == true else {
-                return
-            }
-
-            hoverLogger.debug("Notch hover delay elapsed; opening shelf")
-            self.onOpen()
-        }
-        pendingOpen = work
-        let delay = min(max(openDelayProvider(), 0.10), 0.80)
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
     }
 
     private func scheduleClose() {
@@ -252,10 +223,10 @@ final class HoverMonitor {
             self.pendingClose = nil
 
             let location = NSEvent.mouseLocation
-            let triggerContainsPointer = self.geometryProvider(location)?
-                .triggerRect.contains(location) ?? false
+            let activationContainsPointer = self.geometryProvider(location)?
+                .activationRect.contains(location) ?? false
             let panelContainsPointer = self.panelFrameProvider()?.contains(location) ?? false
-            guard !triggerContainsPointer, !panelContainsPointer else { return }
+            guard !activationContainsPointer, !panelContainsPointer else { return }
 
             hoverLogger.debug("Pointer left notch shelf; collapsing")
             self.closeImmediately(reason: "pointer exit")
@@ -273,9 +244,7 @@ final class HoverMonitor {
     }
 
     private func cancelPendingTransitions() {
-        pendingOpen?.cancel()
         pendingClose?.cancel()
-        pendingOpen = nil
         pendingClose = nil
     }
 

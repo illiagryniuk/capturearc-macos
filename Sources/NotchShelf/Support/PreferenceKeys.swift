@@ -1,11 +1,13 @@
 import Foundation
 
 enum PreferenceKeys {
-    static let hoverDelayMilliseconds = "hoverDelayMilliseconds"
     static let animateNewCaptures = "animateNewCaptures"
     static let retentionPolicy = "retentionPolicy"
     static let preferredDisplayID = "preferredDisplayID"
     static let managedCaptureKeys = "managedCaptureKeys"
+    static let selectedShelfSection = "selectedShelfSection"
+    static let fileShelfTabs = "fileShelfTabs"
+    static let selectedFileShelfTabID = "selectedFileShelfTabID"
 }
 
 enum RetentionPolicy: String, CaseIterable, Identifiable {

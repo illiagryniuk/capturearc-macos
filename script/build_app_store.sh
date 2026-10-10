@@ -17,13 +17,21 @@ INFO_PLIST="$APP_CONTENTS/Info.plist"
 ENTITLEMENTS="$ROOT_DIR/Resources/Entitlements/AppStore.entitlements"
 EFFECTIVE_ENTITLEMENTS="$DIST_DIR/AppStore.effective.entitlements"
 PROFILE_PATH="${APP_STORE_PROVISIONING_PROFILE:-}"
+SIGNING_KEYCHAIN="${APP_STORE_SIGNING_KEYCHAIN:-}"
+BUILD_NUMBER="${APP_STORE_BUILD_NUMBER:-1}"
 
 find_identity() {
   local policy="$1"
   local pattern="$2"
-  /usr/bin/security find-identity -v -p "$policy" 2>/dev/null \
-    | /usr/bin/sed -n "s/.*\"\($pattern[^\"]*\)\".*/\1/p" \
-    | /usr/bin/head -n 1
+  if [[ -n "$SIGNING_KEYCHAIN" ]]; then
+    /usr/bin/security find-identity -v -p "$policy" "$SIGNING_KEYCHAIN" 2>/dev/null \
+      | /usr/bin/sed -n "s/.*\"\($pattern[^\"]*\)\".*/\1/p" \
+      | /usr/bin/head -n 1
+  else
+    /usr/bin/security find-identity -v -p "$policy" 2>/dev/null \
+      | /usr/bin/sed -n "s/.*\"\($pattern[^\"]*\)\".*/\1/p" \
+      | /usr/bin/head -n 1
+  fi
 }
 
 cd "$ROOT_DIR"
@@ -44,6 +52,7 @@ mkdir -p "$APP_MACOS" "$APP_RESOURCES"
   -output "$APP_BINARY"
 chmod +x "$APP_BINARY"
 cp "$ROOT_DIR/Resources/Info.appstore.plist" "$INFO_PLIST"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "$INFO_PLIST"
 cp "$ROOT_DIR/Resources/AppIcon.icns" "$APP_RESOURCES/AppIcon.icns"
 cp "$ROOT_DIR/Resources/PrivacyInfo.xcprivacy" "$APP_RESOURCES/PrivacyInfo.xcprivacy"
 cp "$ENTITLEMENTS" "$EFFECTIVE_ENTITLEMENTS"
@@ -53,7 +62,9 @@ if [[ -n "$PROFILE_PATH" ]]; then
     echo "Provisioning profile not found: $PROFILE_PATH" >&2
     exit 1
   fi
-  cp "$PROFILE_PATH" "$APP_CONTENTS/embedded.provisionprofile"
+  # Downloaded provisioning profiles commonly carry com.apple.quarantine.
+  # macOS App Store processing rejects that attribute anywhere in the payload.
+  cp -X "$PROFILE_PATH" "$APP_CONTENTS/embedded.provisionprofile"
 
   PROFILE_PLIST="$DIST_DIR/AppStore.provisioning-profile.plist"
   /usr/bin/security cms -D -i "$PROFILE_PATH" > "$PROFILE_PLIST"
@@ -81,6 +92,11 @@ if [[ -n "$PROFILE_PATH" ]]; then
     "$EFFECTIVE_ENTITLEMENTS"
 fi
 
+# Strip any quarantine metadata inherited by copied bundle resources before
+# signing and packaging. Extended quarantine attributes are not part of the
+# app's contents but are rejected by App Store Connect when embedded in a pkg.
+/usr/bin/xattr -dr com.apple.quarantine "$APP_BUNDLE" 2>/dev/null || true
+
 APP_SIGNING_IDENTITY="${APP_STORE_APP_SIGNING_IDENTITY:-}"
 if [[ -z "$APP_SIGNING_IDENTITY" ]]; then
   APP_SIGNING_IDENTITY="$(find_identity codesigning 'Apple Distribution:' || true)"
@@ -96,14 +112,18 @@ if [[ -z "$APP_SIGNING_IDENTITY" ]]; then
   exit 1
 fi
 
-/usr/bin/codesign \
-  --force \
-  --deep \
-  --options runtime \
-  --timestamp=none \
-  --entitlements "$EFFECTIVE_ENTITLEMENTS" \
-  --sign "$APP_SIGNING_IDENTITY" \
-  "$APP_BUNDLE"
+codesign_args=(
+  --force
+  --deep
+  --options runtime
+  --timestamp=none
+  --entitlements "$EFFECTIVE_ENTITLEMENTS"
+  --sign "$APP_SIGNING_IDENTITY"
+)
+if [[ -n "$SIGNING_KEYCHAIN" ]]; then
+  codesign_args+=(--keychain "$SIGNING_KEYCHAIN")
+fi
+/usr/bin/codesign "${codesign_args[@]}" "$APP_BUNDLE"
 
 /usr/bin/codesign --verify --deep --strict --verbose=2 "$APP_BUNDLE"
 /usr/bin/plutil -lint "$INFO_PLIST" "$APP_RESOURCES/PrivacyInfo.xcprivacy" "$EFFECTIVE_ENTITLEMENTS"
@@ -139,9 +159,15 @@ case "$MODE" in
       exit 1
     fi
 
+    productbuild_args=(
+      --component "$APP_BUNDLE" /Applications
+      --sign "$INSTALLER_IDENTITY"
+    )
+    if [[ -n "$SIGNING_KEYCHAIN" ]]; then
+      productbuild_args+=(--keychain "$SIGNING_KEYCHAIN")
+    fi
     /usr/bin/productbuild \
-      --component "$APP_BUNDLE" /Applications \
-      --sign "$INSTALLER_IDENTITY" \
+      "${productbuild_args[@]}" \
       "$DIST_DIR/$APP_NAME-1.0.0.pkg"
     ;;
   *)
