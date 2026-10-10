@@ -19,6 +19,10 @@ EFFECTIVE_ENTITLEMENTS="$DIST_DIR/AppStore.effective.entitlements"
 PROFILE_PATH="${APP_STORE_PROVISIONING_PROFILE:-}"
 SIGNING_KEYCHAIN="${APP_STORE_SIGNING_KEYCHAIN:-}"
 BUILD_NUMBER="${APP_STORE_BUILD_NUMBER:-1}"
+MARKETING_VERSION="${APP_STORE_MARKETING_VERSION:-}"
+if [[ -z "$MARKETING_VERSION" ]]; then
+  MARKETING_VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$ROOT_DIR/Resources/Info.appstore.plist")"
+fi
 
 find_identity() {
   local policy="$1"
@@ -53,6 +57,7 @@ mkdir -p "$APP_MACOS" "$APP_RESOURCES"
 chmod +x "$APP_BINARY"
 cp "$ROOT_DIR/Resources/Info.appstore.plist" "$INFO_PLIST"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "$INFO_PLIST"
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MARKETING_VERSION" "$INFO_PLIST"
 cp "$ROOT_DIR/Resources/AppIcon.icns" "$APP_RESOURCES/AppIcon.icns"
 cp "$ROOT_DIR/Resources/PrivacyInfo.xcprivacy" "$APP_RESOURCES/PrivacyInfo.xcprivacy"
 cp "$ENTITLEMENTS" "$EFFECTIVE_ENTITLEMENTS"
@@ -168,7 +173,7 @@ case "$MODE" in
     fi
     /usr/bin/productbuild \
       "${productbuild_args[@]}" \
-      "$DIST_DIR/$APP_NAME-1.0.0.pkg"
+      "$DIST_DIR/$APP_NAME-$MARKETING_VERSION.pkg"
     ;;
   *)
     echo "usage: $0 [--verify|--run|--package]" >&2

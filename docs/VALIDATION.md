@@ -1,10 +1,10 @@
 # Validation Results
 
-Validated on 2026-10-10 on Apple silicon with macOS 26.5.1 and a built-in notched display. Earlier App Store processing evidence below is retained for build 1.0.0 (2); the new build 1.0.0 (3) has not been uploaded yet.
+Validated on 2026-10-10 on Apple silicon with macOS 26.5.1 and a built-in notched display. Earlier App Store processing evidence below is retained for build 1.0.0 (2); the new build 1.1 (3) has not been uploaded yet.
 
 ## Validation summary
 
-The updated CaptureArc passes local build, 34 automated tests, visual UI inspection, sandbox runtime QA, and distribution package/signature checks. Exact notch activation replaces the previous proximity trigger, and the larger shelf now has separate Screenshots and Files sections with persistent folder tabs. Build 1.0.0 (3) is prepared locally but intentionally not uploaded until the owner completes hands-on testing and approves the release gate.
+The updated CaptureArc passes local build, 34 automated tests, visual UI inspection, sandbox runtime QA, and distribution package/signature checks. Exact notch activation replaces the previous proximity trigger, and the larger shelf now has separate Screenshots and Files sections with persistent folder tabs. Build 1.1 (3) is prepared locally for the owner-approved release.
 
 ## Commands detected
 
@@ -24,14 +24,14 @@ The updated CaptureArc passes local build, 34 automated tests, visual UI inspect
 - `codesign -dvvv --entitlements - dist/AppStore/CaptureArc.app` — confirmed the minimal App Sandbox, app-scoped bookmark, and user-selected read/write entitlements.
 - `plutil -lint` — passed for both Info plists, the privacy manifest, and App Store entitlements.
 - `lipo -info dist/AppStore/CaptureArc.app/Contents/MacOS/CaptureArc` — confirmed arm64 and x86_64 slices.
-- `pkgutil --check-signature dist/AppStore/CaptureArc-1.0.0.pkg` — confirmed an Apple-issued Mac Installer Distribution signature and valid Apple certificate chain.
+- `pkgutil --check-signature dist/AppStore/CaptureArc-1.1.pkg` — confirmed an Apple-issued Mac Installer Distribution signature and valid Apple certificate chain.
 - Recursive `xattr` inspection of the app and an expanded final package — confirmed no `com.apple.quarantine` attribute remains.
 - Embedded provisioning-profile inspection — confirmed the app identifier and team match `com.illiagryniuk.capturearc`.
 - `sfltool dumpbtm` — previously confirmed the CaptureArc login-item record during the successful on/off registration round trip. The final build was inspected without changing the user's current enabled state.
 - `/usr/sbin/screencapture -p` — exercised the real macOS default screenshot destination and floating-thumbnail path.
 - Transporter and App Store Connect — build 1.0.0 (2) was delivered, completed Apple processing, reached **Ready to Submit**, and was attached to macOS version 1.0.
-- `APP_STORE_BUILD_NUMBER=3 ... ./script/build_app_store.sh --package` — produced a universal, distribution-signed build 1.0.0 (3) app and installer locally.
-- Final build 3 installer SHA-256: `5c8b2f5ac897353d56622eecf2fd3ddff97e8718d590e740fe528678c48960d0`.
+- `APP_STORE_BUILD_NUMBER=3 ... ./script/build_app_store.sh --package` — produced a universal, distribution-signed build 1.1 (3) app and installer locally.
+- Final build 3 installer SHA-256: `a6b945076193de347034202c957550a19c350cffb6aa3a0fdb3de927c4cbf396`.
 - Final extended-attribute inspection found expected local provenance metadata and no `com.apple.quarantine` attribute.
 - Development-signed App Store configuration — launched with App Sandbox and the production entitlements, displayed the Files workspace, and presented the system folder authorization panel without an app fault.
 
@@ -75,7 +75,7 @@ The updated CaptureArc passes local build, 34 automated tests, visual UI inspect
 
 ## Build result
 
-Passed locally. `dist/CaptureArc.app` is a signed native development build and is running for owner testing. `dist/AppStore/CaptureArc.app` build 3 is a universal arm64 + x86_64 bundle signed with the Apple-issued Mac App Distribution identity and matching provisioning profile. `dist/AppStore/CaptureArc-1.0.0.pkg` is signed with the Apple-issued Mac Installer Distribution identity and has a valid Apple certificate chain. The candidate has App Sandbox enabled, contains `PrivacyInfo.xcprivacy`, and declares macOS 13.0 as the minimum system version. App Store processing remains pending because upload is deliberately held for owner approval.
+Passed locally. `dist/CaptureArc.app` is a signed native development build and is running for owner testing. `dist/AppStore/CaptureArc.app` build 3 is a universal arm64 + x86_64 bundle signed with the Apple-issued Mac App Distribution identity and matching provisioning profile. `dist/AppStore/CaptureArc-1.1.pkg` is signed with the Apple-issued Mac Installer Distribution identity and has a valid Apple certificate chain. The candidate has App Sandbox enabled, contains `PrivacyInfo.xcprivacy`, and declares macOS 13.0 as the minimum system version.
 
 ## Test result
 
@@ -92,5 +92,5 @@ Passed through `swift build`; there is no separate typecheck target.
 ## Blockers
 
 - No blocker for PR or local product review.
-- Build 1.0.0 (3) still needs an updated store screenshot, upload, Apple processing, and attachment to version 1.0.
+- Build 1.1 (3) still needs upload, Apple processing, and attachment to version 1.1.
 - Manual user approval is required before upload/release submission, deployment, merge, or public distribution.

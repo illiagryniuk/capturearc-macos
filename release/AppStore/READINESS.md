@@ -2,7 +2,7 @@
 
 Status: **Ready for owner hands-on QA; upload held for approval**
 
-The updated app, free App Store record, listing copy, support/privacy drafts, and distribution-signed installer are prepared. Apple previously processed build 1.0.0 (2), but that build is now superseded by the local build 1.0.0 (3), which contains exact-notch activation and the new persistent Files shelf. Build 3 is intentionally not uploaded until owner testing and explicit release approval.
+The updated app, free App Store record, listing copy, support/privacy drafts, and distribution-signed installer are prepared. Apple previously released version 1.0; the owner-approved update is version 1.1 build 3, containing exact-notch activation and the new persistent Files shelf.
 
 ## Completed locally
 
@@ -48,7 +48,7 @@ The updated app, free App Store record, listing copy, support/privacy drafts, an
 
 1. Owner tests the running local build, especially exact-notch activation and real folder tabs.
 2. Refresh at least one App Store screenshot to show the new Files section.
-3. Upload build 1.0.0 (3), wait for Apple processing, and attach it to macOS version 1.0.
+3. Upload build 1.1 (3), wait for Apple processing, and attach it to macOS version 1.1.
 4. Optionally install build 3 through TestFlight for a second-Mac/user smoke test.
 5. The owner manually approves **Add for Review** and **Submit for Review**.
 
