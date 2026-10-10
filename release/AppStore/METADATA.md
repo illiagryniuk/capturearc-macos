@@ -6,7 +6,7 @@
 - Subtitle: `Snap. Drag. Share. Stay tidy.`
 - Bundle ID: `com.illiagryniuk.capturearc`
 - SKU suggestion: `capturearc-macos-001`
-- Version: `1.0.0`
+- Version: `1.1`
 - Next candidate build: `3`
 - Primary category: Utilities
 - Secondary category: Productivity
@@ -18,6 +18,10 @@
 ## Promotional text
 
 Keep screenshots and favorite folders at your MacBook notch. Drag, open, share, copy, reveal, or clean up without hunting through Finder.
+
+## What's New in 1.1
+
+CaptureArc 1.1 adds a persistent Files shelf with multiple folder tabs, Finder-style browsing, and quick open or reveal actions. The shelf now expands only when you intentionally push the pointer into the physical notch, and new screenshots begin their flight to the notch as soon as the macOS thumbnail disappears.
 
 ## Description
 
@@ -67,7 +71,7 @@ On first launch, authorize a capture folder. Then press Shift–Command–5, ope
 
 ## Launch recommendation
 
-- Price: free for version 1.0 (USD 0.00 across all 175 price regions).
+- Price: free (USD 0.00 across all 175 price regions).
 - Availability: all 175 countries and regions selected.
 - Pre-order: no.
 - Phased release: yes after a successful TestFlight/internal test.

@@ -2,7 +2,7 @@
 
 ## Release recommendation
 
-Ready for local owner QA; build 3 upload and App Store submission require owner approval
+Owner approved the version 1.1 build 3 upload and App Store submission
 
 ## Summary
 

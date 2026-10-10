@@ -1,6 +1,6 @@
 # App privacy questionnaire answers
 
-Use these answers for version 1.0 after verifying that no analytics or network SDK is added.
+Use these answers for version 1.1 after verifying that no analytics or network SDK is added.
 
 - Data collection: **No, this app does not collect data**
 - Tracking: **No**
@@ -10,7 +10,7 @@ Use these answers for version 1.0 after verifying that no analytics or network S
 - Diagnostics: not transmitted.
 - Product interaction: not transmitted.
 - Identifiers: not collected.
-- Purchases: none in version 1.0.
+- Purchases: none in version 1.1.
 
 The bundled `PrivacyInfo.xcprivacy` declares no tracking, no tracking domains, and no collected-data types. It declares the required-reason APIs currently used for preferences and user-authorized file metadata.
 

@@ -22,9 +22,9 @@ Paid-app agreements, banking, and tax setup are not required for the current fre
 - [x] Final `.pkg` passes local signature and package validation
 - [x] Universal binary still contains both arm64 and x86_64 slices
 - [x] Previous `.pkg` passed Apple's upload validation as build 1.0.0 (2)
-- [x] Updated build 1.0.0 (3) passes local universal-binary, entitlement, app-signature, and installer-signature checks
-- [ ] Build 1.0.0 (3) uploaded and processed by Apple
-- [ ] Processed build 1.0.0 (3) attached to macOS version 1.0
+- [x] Updated build 1.1 (3) passes local universal-binary, entitlement, app-signature, and installer-signature checks
+- [ ] Build 1.1 (3) uploaded and processed by Apple
+- [ ] Processed build 1.1 (3) attached to macOS version 1.1
 
 ## Store listing
 
