@@ -2,11 +2,11 @@
 
 ## Release recommendation
 
-Owner approved the version 1.1 build 3 upload and App Store submission
+Released to GitHub and submitted to Apple; version 1.1 build 3 is **Waiting for Review**
 
 ## Summary
 
-The shelf now opens only when the pointer enters the physical notch, not when it merely approaches. The expanded 820×540 shelf adds Screenshots and Files sections; Files supports multiple persistent folder tabs, nested browsing, default-app opening, and Finder reveal. A signed local app is running for hands-on testing, and a distribution-signed universal build 3 package is prepared locally.
+The shelf now opens only when the pointer enters the physical notch, not when it merely approaches. The expanded 820×540 shelf adds Screenshots and Files sections; Files supports multiple persistent folder tabs, nested browsing, default-app opening, and Finder reveal. Version 1.1 build 3 was signed, uploaded, processed, attached to the updated listing, and submitted to Apple Review.
 
 ## What changed
 
@@ -46,9 +46,9 @@ Not applicable. This was a native product functionality and UI/UX change, not a 
 
 ## Release blockers
 
-- None for opening a PR.
-- Build 3 upload, updated Files screenshot, Apple processing, attachment, and submission remain. See `release/AppStore/READINESS.md`.
-- Release still requires explicit user approval.
+- No code, packaging, upload, or submission blockers remain.
+- Apple Review is pending. The version uses manual release, so App Store Connect will require an owner release action after approval.
+- The existing five valid screenshots were retained; a new screenshot focused on the Files section was not added to this submission.
 
 ## Risks
 
@@ -90,4 +90,4 @@ Fix automatic screenshot capture and refine the notch handoff
 
 ## Final user action required
 
-Review the local app and approve the PR/release boundary. Do not deploy, merge, notarize, or distribute publicly without that approval.
+Wait for Apple Review. If version 1.1 is approved, manually release it from App Store Connect when ready.

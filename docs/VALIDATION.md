@@ -1,10 +1,10 @@
 # Validation Results
 
-Validated on 2026-10-10 on Apple silicon with macOS 26.5.1 and a built-in notched display. Earlier App Store processing evidence below is retained for build 1.0.0 (2); the new build 1.1 (3) has not been uploaded yet.
+Validated on 2026-10-10 on Apple silicon with macOS 26.5.1 and a built-in notched display. Version 1.1 build 3 completed Apple processing and was submitted for review on the same date.
 
 ## Validation summary
 
-The updated CaptureArc passes local build, 34 automated tests, visual UI inspection, sandbox runtime QA, and distribution package/signature checks. Exact notch activation replaces the previous proximity trigger, and the larger shelf now has separate Screenshots and Files sections with persistent folder tabs. Build 1.1 (3) is prepared locally for the owner-approved release.
+The updated CaptureArc passes local build, 34 automated tests, visual UI inspection, sandbox runtime QA, distribution package/signature checks, Transporter upload, and App Store Connect processing. Exact notch activation replaces the previous proximity trigger, and the larger shelf now has separate Screenshots and Files sections with persistent folder tabs. Version 1.1 build 3 is **Waiting for Review**.
 
 ## Commands detected
 
@@ -32,6 +32,8 @@ The updated CaptureArc passes local build, 34 automated tests, visual UI inspect
 - Transporter and App Store Connect — build 1.0.0 (2) was delivered, completed Apple processing, reached **Ready to Submit**, and was attached to macOS version 1.0.
 - `APP_STORE_BUILD_NUMBER=3 ... ./script/build_app_store.sh --package` — produced a universal, distribution-signed build 1.1 (3) app and installer locally.
 - Final build 3 installer SHA-256: `a6b945076193de347034202c957550a19c350cffb6aa3a0fdb3de927c4cbf396`.
+- Transporter — delivered version 1.1 build 3 successfully; Apple processing completed with the build ready for internal testing.
+- App Store Connect — created macOS version 1.1, updated product and review metadata, attached build 1.1 (3), and accepted the submission with status **Waiting for Review**.
 - Final extended-attribute inspection found expected local provenance metadata and no `com.apple.quarantine` attribute.
 - Development-signed App Store configuration — launched with App Sandbox and the production entitlements, displayed the Files workspace, and presented the system folder authorization panel without an app fault.
 
@@ -67,7 +69,7 @@ The updated CaptureArc passes local build, 34 automated tests, visual UI inspect
 
 - Lint — no lint command or configuration exists in the project.
 - Separate typecheck — no standalone typecheck command exists; `swift build` compiled all production sources.
-- TestFlight install on a second Mac/user account — build 2 is processed but does not contain this update; build 3 is not uploaded yet.
+- TestFlight install on a second Mac/user account — build 3 is processed but was not installed on a second Mac/user account.
 - Real logout/login cycle — registration state and Background Task Management state were verified, but the Mac was not logged out during QA.
 - Reduce Motion and Reduce Transparency — code paths and reduced-motion timing are covered, but the system accessibility settings were not toggled live.
 - External-display, multiple-display, full-screen-app, and every-Space visual QA — geometry has unit coverage, but live QA used the built-in notched display.
@@ -91,6 +93,6 @@ Passed through `swift build`; there is no separate typecheck target.
 
 ## Blockers
 
-- No blocker for PR or local product review.
-- Build 1.1 (3) still needs upload, Apple processing, and attachment to version 1.1.
-- Manual user approval is required before upload/release submission, deployment, merge, or public distribution.
+- No blocker remains for source release, packaging, upload, or review submission.
+- Apple Review is pending.
+- Manual release is selected, so publishing version 1.1 after approval remains an owner-controlled App Store Connect action.
