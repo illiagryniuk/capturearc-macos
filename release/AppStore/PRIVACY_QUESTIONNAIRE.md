@@ -1,3 +1,5 @@
+> Historical Mac 1.1 release record. For the prepared Mac 1.2 and separate iPhone 1.0 release, use [Phone/Mac release preparation](../PhoneMac/BUILD_AND_HANDOFF.md).
+
 # App privacy questionnaire answers
 
 Use these answers for version 1.1 after verifying that no analytics or network SDK is added.

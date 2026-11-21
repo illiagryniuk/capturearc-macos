@@ -1,6 +1,7 @@
 import Foundation
 
 enum PreferenceKeys {
+    static let captureSetupDeferred = "captureSetupDeferred"
     static let animateNewCaptures = "animateNewCaptures"
     static let retentionPolicy = "retentionPolicy"
     static let preferredDisplayID = "preferredDisplayID"

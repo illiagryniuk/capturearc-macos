@@ -1,3 +1,5 @@
+> Historical Mac 1.1 release record. For the prepared Mac 1.2 and separate iPhone 1.0 release, use [Phone/Mac release preparation](../PhoneMac/BUILD_AND_HANDOFF.md).
+
 # App Review notes
 
 CaptureArc is a menu-bar utility that presents a shelf around the MacBook notch. It has no account, network service, advertising, analytics SDK, or in-app purchase.

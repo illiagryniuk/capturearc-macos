@@ -10,9 +10,11 @@ let package = Package(
     products: [
         .executable(name: "NotchShelf", targets: ["NotchShelf"])
     ],
+    dependencies: [.package(path: "Packages/ClipboardDemoTransport")],
     targets: [
         .executableTarget(
             name: "NotchShelf",
+            dependencies: [.product(name: "ClipboardDemoTransport", package: "ClipboardDemoTransport")],
             path: "Sources/NotchShelf"
         ),
         .testTarget(

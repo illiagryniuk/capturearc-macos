@@ -1,14 +1,17 @@
+import ClipboardDemoTransport
 import SwiftUI
 
 private enum ShelfSection: String, CaseIterable {
     case screenshots
     case files
+    case incomingFromiPhone
 }
 
 struct CaptureShelfView: View {
     @ObservedObject private var library: CaptureLibrary
     @ObservedObject private var actions: CaptureActions
     @ObservedObject private var fileStore: FileShelfStore
+    @ObservedObject private var incomingStore: IncomingTransferStore
     private let onRequestClose: () -> Void
 
     @State private var isConfirmingTrashAll = false
@@ -19,11 +22,13 @@ struct CaptureShelfView: View {
         library: CaptureLibrary,
         actions: CaptureActions,
         fileStore: FileShelfStore,
+        incomingStore: IncomingTransferStore,
         onRequestClose: @escaping () -> Void = {}
     ) {
         self.library = library
         self.actions = actions
         self.fileStore = fileStore
+        self.incomingStore = incomingStore
         self.onRequestClose = onRequestClose
     }
 
@@ -48,6 +53,8 @@ struct CaptureShelfView: View {
                 actionBar
             case .files:
                 FileShelfView(store: fileStore)
+            case .incomingFromiPhone:
+                IncomingTransferView(store: incomingStore)
             }
         }
         .alert(
@@ -89,10 +96,10 @@ struct CaptureShelfView: View {
             .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(selectedSection == .screenshots ? "Capture Shelf" : "File Shelf")
+                Text(sectionTitle)
                     .font(.system(size: 13, weight: .semibold))
                 Label(
-                    selectedSection == .screenshots ? statusText : fileStatusText,
+                    sectionStatus,
                     systemImage: statusSystemImage
                 )
                 .font(.system(size: 10, weight: .medium))
@@ -106,6 +113,8 @@ struct CaptureShelfView: View {
                     .tag(ShelfSection.screenshots)
                 Label("Files", systemImage: "folder")
                     .tag(ShelfSection.files)
+                Label(CaptureArcText.value("From iPhone"), systemImage: "iphone")
+                    .tag(ShelfSection.incomingFromiPhone)
             }
             .labelsHidden()
             .pickerStyle(.segmented)
@@ -281,7 +290,24 @@ struct CaptureShelfView: View {
         return count == 1 ? "1 folder tab" : "\(count) folder tabs"
     }
 
+    private var sectionTitle: String {
+        switch selectedSection {
+        case .screenshots: return "Capture Shelf"
+        case .files: return "File Shelf"
+        case .incomingFromiPhone: return CaptureArcText.value("From iPhone")
+        }
+    }
+
+    private var sectionStatus: String {
+        switch selectedSection {
+        case .screenshots: return statusText
+        case .files: return fileStatusText
+        case .incomingFromiPhone: return incomingStore.invitationCode != nil ? CaptureArcText.value("Receiving enabled") : (incomingStore.hasReceived ? CaptureArcText.value("Received items") : CaptureArcText.value("Pair your iPhone to get started"))
+        }
+    }
+
     private var statusSystemImage: String {
+        if selectedSection == .incomingFromiPhone { return "iphone" }
         if selectedSection == .screenshots {
             return library.isReconciling
                 ? "arrow.triangle.2.circlepath"

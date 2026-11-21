@@ -38,6 +38,14 @@ struct OnboardingView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 22) {
                     header
+                    OnboardingCard(title: "Send from your iPhone", systemImage: "iphone") {
+                        Text("Use CaptureArc Sender to share text, photos, and links over Wi-Fi. No capture folder is needed for iPhone sharing.")
+                        Button("Set Up iPhone Sharing") {
+                            UserDefaults.standard.set(true, forKey: PreferenceKeys.captureSetupDeferred)
+                            UserDefaults.standard.set("incomingFromiPhone", forKey: PreferenceKeys.selectedShelfSection)
+                            onComplete()
+                        }.buttonStyle(.borderedProminent)
+                    }
                     folderCard
                     screenshotSetupCard
                     privacyCard
@@ -228,7 +236,7 @@ struct OnboardingView: View {
 
     private var headerDescription: String {
         if requiresExplicitCaptureFolderAuthorization {
-            return "CaptureArc keeps files local. App Store security requires you to approve each folder CaptureArc uses."
+            return "Keep captures and received items close at hand. Choose iPhone sharing, or authorize a folder for screenshots."
         }
         return "CaptureArc normally follows the macOS screenshot folder automatically. If that location is unavailable, choose a fallback folder here."
     }
@@ -249,7 +257,7 @@ struct OnboardingView: View {
 
     private var privacyDescription: String {
         if requiresExplicitCaptureFolderAuthorization {
-            return "CaptureArc does not capture your screen. It reads only the capture folder and File Shelf folders you authorize, and your files stay on your Mac."
+            return "CaptureArc does not capture your screen. It reads folders you authorize and receives only items sent by your paired iPhone. Transfers use encrypted local Wi-Fi; there is no CaptureArc cloud service."
         }
         return "CaptureArc does not capture your screen. It reads the current macOS Screenshot destination and any fallback folder you explicitly authorize; your captures stay on your Mac."
     }
