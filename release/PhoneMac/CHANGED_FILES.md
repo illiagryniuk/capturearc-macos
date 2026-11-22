@@ -78,3 +78,9 @@ All changes are confined to this isolated release candidate. Build output, priva
 - `script/generate_app_icon.swift`
 - `script/generate_phone_mac_screenshot.swift`
 - `release/PhoneMac/CHANGED_FILES.md`
+
+- `release/PhoneMac/Mac-AppStore-Export.plist`
+- `release/PhoneMac/Mac-AppStore-Upload.plist`
+- `release/PhoneMac/iPhone-AppStore-Upload.plist`
+- `release/PhoneMac/STORE_STATUS.md`
+- `release/PhoneMac/upload-receipts.json`

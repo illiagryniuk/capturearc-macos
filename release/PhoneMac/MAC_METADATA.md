@@ -1,5 +1,7 @@
 # CaptureArc for Mac 1.2 — store draft
 
+**Current status:** Mac 1.2 draft and six screenshots are saved, and corrected build 1.2 (4) uploaded successfully. See [STORE_STATUS.md](STORE_STATUS.md) for the outstanding processing/selection and submission gates. Do not upload build 4 again.
+
 Update the existing app **CaptureArc: Screenshot Shelf**, Apple ID **6789554439**, bundle **com.illiagryniuk.capturearc**. Candidate: **1.2 (4)**, macOS 13+, Apple silicon and Intel. Verify that the version/build are still unused in App Store Connect before uploading; the browser was signed out during preparation.
 
 ## Subtitle

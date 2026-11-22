@@ -14,7 +14,9 @@
         "com.apple.security.network.client": true,
         "com.apple.security.network.server": true
       },
-      "strictSignature": "passed"
+      "strictSignature": "passed",
+      "resourceBundleIdentifier": "com.illiagryniuk.capturearc.resources.clipboarddemotransport-clipboarddemotransport",
+      "packagingFix": "Added missing SwiftPM resource bundle identifier before signing; App Store validation error 90276."
     },
     {
       "bundle": "com.illiagryniuk.capturearc.sender",
@@ -52,8 +54,9 @@
   "artifacts": [
     {
       "file": "CaptureArc-1.2.pkg",
-      "bytes": 3321166,
-      "sha256": "5eb4ec45ed6ea64e3268d60f83c848360317c1a6651c019ec065871dd5e7cfa9"
+      "bytes": 3321226,
+      "sha256": "bfcc28facb7f735106785166700428676c9553bef34d2ed00617cb526fb3decd",
+      "supersedesSHA256": "5eb4ec45ed6ea64e3268d60f83c848360317c1a6651c019ec065871dd5e7cfa9"
     },
     {
       "file": "CaptureArcSender.ipa",

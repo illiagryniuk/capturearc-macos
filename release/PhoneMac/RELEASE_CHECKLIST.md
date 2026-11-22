@@ -1,5 +1,7 @@
 # Release Checklist
 
+**Current status:** See [STORE_STATUS.md](STORE_STATUS.md). Both builds uploaded successfully. The owner has authorized App Review submission; neither submission is confirmed and public release remains manual.
+
 ## Release recommendation
 **Ready for PR. Public release is blocked pending store access and final physical QA.**
 
@@ -18,16 +20,16 @@ See CHANGED_FILES.md for the complete file list.
 The owner asked for fast sharing of selected long text, photos, and links from iPhone, with visual draggable cards and immediate text pasting on Mac, then requested a Mac product update and a separate iPhone app prepared for release.
 
 ## Marketing approval
-Drafts are prepared; owner approval is still needed. No public website or store metadata has been changed. Confirm the separate app name is available, free pricing/territories, the final screenshot order, and the publish date. Add the iPhone's real App Store URL after its record exists.
+The separate CaptureArc Sender record and name are confirmed (Apple ID 6837705742). The Mac 1.2 listing and six screenshots are saved. The owner authorized both App Review submissions on November 21. The iPhone listing, private review contact, screenshots, pricing/territories, and remaining store fields still need completion. Updated public support/privacy/terms pages are prepared locally and must be published and checked before review. Public app release remains manual.
 
 ## Validation status
 62 automated tests pass. Signed Mac PKG and iPhone IPA pass local integrity, identity, entitlement, resource, deployment-target, and privacy/icon checks. See VALIDATION_RESULTS.md and artifact-verification.json for supporting evidence and SHA-256 values.
 
 ## Release blockers
-1. **App Store Connect session.** Sign in in the prepared CaptureArc release tab. Verify the current Mac 1.1 status and unused Mac 1.2 (4) number; create the separate iPhone record for `com.illiagryniuk.capturearc.sender` with confirmed name/SKU. No store record status is assumed from old release notes.
+1. **App Store Connect session.** Restore the signed-in Chrome connection. Both records already exist. The latest tab returned to Apple's login page, and browser control could not attach.
 2. **Final physical check.** The new Sender identity is installed, and CaptureArc Release QA on Hoover has a fresh pairing QR. Scan once in the separate app, share a photo, and verify that its Mac card drags successfully into a real destination app. Also finish the focused device checks below before release. Previous demo ACK/autocopy confirmations remain recorded and do not need diagnostic repetition.
-3. **Store preparation completion.** Upload the verified packages, wait for server processing, attach the correct builds and screenshots, complete current privacy/age/content-rights/account declarations using the owner's actual details, and review contact information. No upload/submission happened during this preparation.
-4. **Public materials and release approval.** Approve and publish the prepared website updates, then approve App Review submission and later public release. Release the Mac update before the separate iPhone app so its required companion is available.
+3. **Store preparation completion.** Both builds are delivered; do not upload them again. Confirm Mac 1.2 (4) processing/selection and iPhone 1.0 (1) selection, upload the iPhone screenshots, and complete current privacy/age/content-rights/account declarations and verified review contact. No App Review submission is confirmed.
+4. **Public materials and review access.** Publish and verify the prepared support/privacy/terms pages through the authorized release workflow. Make sure Apple's iPhone reviewer can obtain the required Mac 1.2 companion. The owner has authorized review submission of both apps; retain manual public release so the paired apps can be released together after approval.
 
 ## Risks
 - Same-Wi-Fi networking requires peer access; isolated guest networks and sleeping/offline Macs can block transfer. There is no cloud fallback.
@@ -54,4 +56,4 @@ CaptureArc can now receive user-selected text, photos, links, and files from the
 Adds the iPhone Share extension and distribution identity, privacy/icon resources, release build scripts, updated store/site drafts, and screenshot assets. Local validation: 46 Mac + 7 transport + 9 iOS tests pass; universal Mac PKG and iPhone IPA export and signature checks pass. Public release remains gated on final physical QA, App Store record/processing checks, and owner approval.
 
 ## Final user action required
-Finish the new-identity photo/drag check on Hoover and sign in to App Store Connect. After those checks and store processing are complete, review the concrete listings/builds and approve submission/public release. The global project rule and Release Reviewer explicitly require manual approval before release; this preparation does not publish or deploy anything.
+Finish the new-identity photo/drag check on Hoover, restore the signed-in Chrome session, and provide or enter the iPhone App Review email and phone number. App Review submission is already authorized. No further submission permission is needed once the checks and forms are complete. Public release remains under manual owner control.

@@ -1,5 +1,7 @@
 # Build and handoff
 
+**Current store handoff:** See [STORE_STATUS.md](STORE_STATUS.md). The iPhone 1.0 (1) upload succeeded and must not be repeated. Both records now exist. The owner has authorized App Review submission of both apps, with public release remaining manual.
+
 ## Source
 Isolated branch `codex/capturearc-phone-mac-release-prep`, based on remote main `51f0be8ff58a39e3d3e45f8fda8d93af3552c3b9`. Integrates the locally tested Share/ACK/AutoCopy/Cards demo without modifying the original production checkout. No changes were pushed or merged.
 
@@ -13,6 +15,17 @@ bash script/build_app_store.sh --package
 ```
 
 Uses existing valid Mac App Store application and installer certificates. Output: `dist/AppStore/CaptureArc-1.2.pkg`. This is an App Store upload installer, not a public Developer ID download. It is deliberately not notarized: App Store distribution uses Apple's review/signing path. The local QA copy has a separate bundle ID and is not the shipping artifact.
+
+For the November 22 upload, the unchanged signed app was copied into an isolated `artifacts/Mac-Release/CaptureArc.xcarchive` with archive metadata recording its actual bundle/version/build and universal architectures. Xcode then successfully exported it using `Mac-AppStore-Export.plist`. The existing provisioning profile is Xcode-managed, so export uses automatic signing with the existing Mac application/installer identities. No certificate was revoked and no security entitlement was added. The exported app's Info.plist and embedded profile are byte-identical to the original; arm64/x86_64 executable code/data segments match. Xcode refreshed the code signature, so the container/package hash differs.
+
+```sh
+xcodebuild -exportArchive -archivePath /path/to/CaptureArc.xcarchive \
+  -exportPath /path/to/Mac-AppStore-export \
+  -exportOptionsPlist release/PhoneMac/Mac-AppStore-Export.plist \
+  -allowProvisioningUpdates
+```
+
+`Mac-AppStore-Upload.plist` selects `destination=upload`. Use it only after checking the exact version/build is not already delivered. Mac 1.2 (4) has now uploaded successfully from the corrected `Mac-Release-ResourceID` archive. The first attempt exposed a missing SwiftPM resource bundle identifier; the packaging script now adds it before signing. The local Mac PKG was rebuilt and supersedes the original preparation package. Current upload status and evidence are in STORE_STATUS.md.
 
 ## Separate iPhone app
 Version 1.0 (1), main bundle `com.illiagryniuk.capturearc.sender`, Share extension `.sender.share`, iOS 17+, iPhone. Xcode 26.6 project: `iPhoneSender/CaptureArcSender.xcodeproj`.

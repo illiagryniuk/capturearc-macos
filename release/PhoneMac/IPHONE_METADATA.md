@@ -1,5 +1,7 @@
 # CaptureArc Sender for iPhone 1.0 — separate app draft
 
+**Current status:** The separate record is created with Apple ID **6837705742**, and version **1.0 (1)** is uploaded and processed. See [STORE_STATUS.md](STORE_STATUS.md); do not upload this build again. The proposed name/SKU below are confirmed record values.
+
 Create a **separate iOS app record**, not another platform on the Mac record.
 
 - Name: **CaptureArc Sender** (availability still requires App Store Connect).
@@ -17,7 +19,7 @@ Create a **separate iOS app record**, not another platform on the Mac record.
 Send text and photos to Mac
 
 ## Promotional text
-Select it on your iPhone. Use Share → CaptureArc. Your text, photos, links, and files arrive as cards on your Mac, ready to paste or drag into your work.
+Select it on your iPhone. Share with CaptureArc. Your text, photos, links, and files arrive as cards on your Mac, ready to paste or drag into your work.
 
 ## Description
 CaptureArc Sender is the iPhone companion to CaptureArc for Mac.

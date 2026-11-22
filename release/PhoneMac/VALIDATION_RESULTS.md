@@ -1,5 +1,9 @@
 # Validation Results
 
+**Store status update:** See [STORE_STATUS.md](STORE_STATUS.md) for subsequent iPhone upload/processing evidence and current blockers. The local validation results below are unchanged; the original store-access and upload notes are historical.
+
+November 22: fixed Mac App Store validation error 90276 by adding the missing SwiftPM resource bundle identifier during packaging. Rebuilt both architectures, verified the preserved English/Ukrainian resources, strict app signature, installer certificate, shell syntax, and Git whitespace. The corrected Mac 1.2 (4) upload succeeded with no warnings/errors. The 62 application tests were not repeated for this packaging-only metadata change.
+
 ## Validation summary
 Prepared on Hoover on November 21, 2026. **62 automated tests pass**: 46 Mac, 7 transport, 9 iPhone Share-input tests. Universal Mac App Store PKG and separately signed iPhone App Store IPA built and verified locally. This is ready for code review and final physical QA; App Store submission/public release is not yet cleared.
 
