@@ -91,3 +91,5 @@
 "Receiving resumes when you reopen CaptureArc." = "Прийом відновиться, коли ви знову відкриєте CaptureArc.";
 "Selected text" = "Вибраний текст";
 "To send part of a note, select the text and use Share in the selection menu. If Share is unavailable, copy the selection and paste it here. The top Share button in Notes sends the whole note." = "Щоб надіслати лише частину нотатки, виберіть текст і натисніть «Поділитися» в меню виділення. Якщо цієї дії немає, скопіюйте текст і вставте його тут. Кнопка «Поділитися» зверху в Notes надсилає всю нотатку.";
+"Screenshots" = "Знімки екрана";
+"Files" = "Файли";

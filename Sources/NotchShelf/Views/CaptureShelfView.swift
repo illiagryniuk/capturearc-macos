@@ -1,10 +1,28 @@
 import ClipboardDemoTransport
 import SwiftUI
 
-private enum ShelfSection: String, CaseIterable {
+private enum ShelfSection: String, CaseIterable, Identifiable {
     case screenshots
     case files
     case incomingFromiPhone
+
+    var id: Self { self }
+
+    var tabTitle: String {
+        switch self {
+        case .screenshots: return CaptureArcText.value("Screenshots")
+        case .files: return CaptureArcText.value("Files")
+        case .incomingFromiPhone: return CaptureArcText.value("From iPhone")
+        }
+    }
+
+    var tabIcon: String {
+        switch self {
+        case .screenshots: return "camera.viewfinder"
+        case .files: return "folder"
+        case .incomingFromiPhone: return "iphone"
+        }
+    }
 }
 
 struct CaptureShelfView: View {
@@ -84,70 +102,109 @@ struct CaptureShelfView: View {
     }
 
     private var header: some View {
-        HStack(spacing: 12) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 9, style: .continuous)
-                    .fill(NotchShelfTheme.accentGradient)
-                Image(systemName: "camera.viewfinder")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.white)
-            }
-            .frame(width: 30, height: 30)
-            .accessibilityHidden(true)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(sectionTitle)
-                    .font(.system(size: 13, weight: .semibold))
-                Label(
-                    sectionStatus,
-                    systemImage: statusSystemImage
-                )
-                .font(.system(size: 10, weight: .medium))
-                .foregroundStyle(.secondary)
-            }
-
-            Spacer(minLength: 8)
-
-            Picker("Shelf", selection: selectedSectionBinding) {
-                Label("Screenshots", systemImage: "camera.viewfinder")
-                    .tag(ShelfSection.screenshots)
-                Label("Files", systemImage: "folder")
-                    .tag(ShelfSection.files)
-                Label(CaptureArcText.value("From iPhone"), systemImage: "iphone")
-                    .tag(ShelfSection.incomingFromiPhone)
-            }
-            .labelsHidden()
-            .pickerStyle(.segmented)
-            .frame(width: 230)
-            .accessibilityLabel("Shelf section")
-
-            if selectedSection == .screenshots && library.isReconciling {
-                ProgressView()
-                    .controlSize(.small)
-                    .help("Scanning the capture folder")
-            }
-
-            if selectedSection == .screenshots {
-                Button(action: library.rescan) {
-                    Image(systemName: "arrow.clockwise")
+        ShelfHeaderLayout {
+            HStack(spacing: 8) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 9, style: .continuous)
+                        .fill(NotchShelfTheme.accentGradient)
+                    Image(systemName: "camera.viewfinder")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.white)
                 }
-                .buttonStyle(.bordered)
+                .frame(width: 30, height: 30)
+                .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(sectionTitle)
+                        .font(.system(size: 13, weight: .semibold))
+                    Label(sectionStatus, systemImage: statusSystemImage)
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(.secondary)
+                }
+                .lineLimit(1)
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+            // Fit navigation only inside the space left by the trailing actions.
+            ViewThatFits(in: .horizontal) {
+                sectionTabs(showsTitles: true)
+                sectionTabs(showsTitles: false)
+                Menu {
+                    Picker("Shelf section", selection: selectedSectionBinding) {
+                        ForEach(ShelfSection.allCases) { section in
+                            Label(section.tabTitle, systemImage: section.tabIcon).tag(section)
+                        }
+                    }
+                } label: {
+                    Image(systemName: selectedSection.tabIcon)
+                }
+                .menuStyle(.borderlessButton)
                 .controlSize(.small)
-                .accessibilityLabel("Rescan capture folder")
-                .help("Rescan capture folder")
+                .fixedSize()
+                .accessibilityLabel("Shelf section")
+                .accessibilityValue(selectedSection.tabTitle)
+                .help(selectedSection.tabTitle)
             }
 
-            Button(action: onRequestClose) {
-                Image(systemName: "chevron.up")
+            HStack(spacing: 6) {
+                if selectedSection == .screenshots && library.isReconciling {
+                    ProgressView()
+                        .controlSize(.small)
+                        .help("Scanning the capture folder")
+                }
+
+                if selectedSection == .screenshots {
+                    Button(action: library.rescan) {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                    .accessibilityLabel("Rescan capture folder")
+                    .help("Rescan capture folder")
+                }
+
+                Button(action: onRequestClose) {
+                    Image(systemName: "chevron.up")
+                }
+                .accessibilityLabel("Collapse Capture Shelf")
+                .help("Collapse shelf")
             }
             .buttonStyle(.bordered)
             .controlSize(.small)
-            .accessibilityLabel("Collapse Capture Shelf")
-            .help("Collapse shelf")
+            .fixedSize()
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 12)
         .frame(height: 48)
         .background(Color.white.opacity(0.035))
+    }
+
+    private func sectionTabs(showsTitles: Bool) -> some View {
+        HStack(spacing: 2) {
+            ForEach(ShelfSection.allCases) { section in
+                Button {
+                    selectedSectionBinding.wrappedValue = section
+                } label: {
+                    Label(section.tabTitle, systemImage: section.tabIcon)
+                        .labelStyle(ShelfTabLabelStyle(showsTitle: showsTitles))
+                        .font(.system(size: 11, weight: .medium))
+                        .padding(.horizontal, showsTitles ? 7 : 8)
+                        .frame(minWidth: 27, minHeight: 24)
+                        .contentShape(Rectangle())
+                        .background {
+                            if selectedSection == section {
+                                RoundedRectangle(cornerRadius: 5).fill(.primary.opacity(0.17))
+                            }
+                        }
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(section.tabTitle)
+                .accessibilityAddTraits(selectedSection == section ? .isSelected : [])
+                .help(section.tabTitle)
+            }
+        }
+        .padding(2)
+        .background(.primary.opacity(0.06), in: RoundedRectangle(cornerRadius: 7))
+        .fixedSize()
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Shelf section")
     }
 
     private var emptyState: some View {
@@ -314,5 +371,47 @@ struct CaptureShelfView: View {
                 : "checkmark.circle"
         }
         return fileStore.tabs.isEmpty ? "folder.badge.plus" : "folder.fill"
+    }
+}
+
+private struct ShelfTabLabelStyle: LabelStyle {
+    var showsTitle: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: 4) {
+            configuration.icon
+            if showsTitle { configuration.title }
+        }
+    }
+}
+
+/// Keeps the trailing actions at the right edge. Navigation chooses its
+/// presentation only after those actions and a small title reserve are measured.
+struct ShelfHeaderLayout: Layout {
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        guard subviews.count == 3 else { return .zero }
+        let actions = subviews[2].sizeThatFits(.unspecified)
+        let title = subviews[0].sizeThatFits(.unspecified)
+        let navigation = subviews[1].sizeThatFits(.unspecified)
+        let idealWidth = title.width + navigation.width + actions.width + ShelfHeaderMetrics.spacing * 2
+        return CGSize(width: proposal.width ?? idealWidth,
+                      height: max(title.height, navigation.height, actions.height))
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        guard subviews.count == 3 else { return }
+        let actions = subviews[2].sizeThatFits(.unspecified)
+        let titleIdeal = subviews[0].sizeThatFits(.unspecified)
+        let budget = ShelfHeaderMetrics.navigationBudget(width: bounds.width, actions: actions.width, titleIdeal: titleIdeal.width)
+        let navigation = subviews[1].sizeThatFits(ProposedViewSize(width: budget, height: bounds.height))
+        let actionX = bounds.maxX - actions.width
+        let navigationX = actionX - ShelfHeaderMetrics.spacing - navigation.width
+        let titleWidth = max(0, navigationX - ShelfHeaderMetrics.spacing - bounds.minX)
+        subviews[0].place(at: CGPoint(x: bounds.minX, y: bounds.midY), anchor: .leading,
+                          proposal: ProposedViewSize(width: titleWidth, height: bounds.height))
+        subviews[1].place(at: CGPoint(x: navigationX, y: bounds.midY), anchor: .leading,
+                          proposal: ProposedViewSize(width: budget, height: bounds.height))
+        subviews[2].place(at: CGPoint(x: actionX, y: bounds.midY), anchor: .leading,
+                          proposal: ProposedViewSize(actions))
     }
 }
