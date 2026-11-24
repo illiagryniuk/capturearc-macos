@@ -31,3 +31,5 @@ The last saved record evidence (22 November, not re-read as current) also leaves
 The next release step is to complete the prepared autonomous paired test when the device is available to Xcode and GUI control is functional, reconcile processed builds 5/2 and the saved declarations in the authenticated App Store Connect session, then select and submit the verified builds while retaining manual release. The user is not being asked to repeat a scan/send test.
 
 Additional network triage: the iOS simulator reports a satisfied Wi-Fi path, while the authenticated service endpoint did not reach ready during a five-second diagnostic. The diagnostic records observations and is not a successful transfer test. The cause of the earlier 30-second deadline is not established by these observations.
+
+The host Bonjour browser saw other existing CaptureArc services, but the private QA service was absent during the four-second check. The QA TCP listener itself reported ready. This narrows the failed attempt to discovery/connection readiness before payload transfer; it does not establish a new file-size failure or identify the underlying OS/network cause.

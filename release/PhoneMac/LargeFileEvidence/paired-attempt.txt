@@ -21,3 +21,6 @@ Synthetic paired authenticated endpoint: setup
 	 Executed 1 test, with 0 failures (0 unexpected) in 5.125 (5.127) seconds
 	 Executed 1 test, with 0 failures (0 unexpected) in 5.125 (5.128) seconds
 ** TEST EXECUTE SUCCEEDED **
+
+Mac listener: listener_ready; TCP LISTEN confirmed.
+Host Bonjour check: existing CaptureArc services observed; exact private QA service absent over four seconds. No service identifier or pairing key recorded.
