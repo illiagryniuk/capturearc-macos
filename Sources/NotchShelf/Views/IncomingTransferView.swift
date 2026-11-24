@@ -14,6 +14,13 @@ struct IncomingTransferView: View {
             if store.canPair {
                 pairingControls
             }
+            if let progress = store.transferProgress {
+                HStack {
+                    ProgressView(value: progress.fraction)
+                    Text(progress.label).font(.caption)
+                    Button(CaptureArcText.value("Cancel"), action: store.cancelTransfer)
+                }.padding(.horizontal, 16)
+            }
             if store.items.isEmpty && store.invitationCode == nil {
                 Spacer()
                 Image(systemName: "iphone")

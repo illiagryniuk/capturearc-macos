@@ -14,29 +14,37 @@ public enum DemoWireError: LocalizedError {
     }
 }
 
-public struct DemoInvitation: Codable {
+public struct DemoInvitation: Codable, Sendable {
     public static let serviceType = "_caparc-demo._tcp"
     public static let lifetime: TimeInterval = 120
     public let service: UUID
     public let key: Data
     public let validUntil: Date
     public let untilStopped: Bool?
+    public let fileProtocol: Int?
 
     public var isManualSession: Bool { untilStopped == true }
     public func isValid(at now: Date = Date()) -> Bool { isManualSession || validUntil > now }
 
-    public init(service: UUID, key: Data, validUntil: Date) {
+    public init(service: UUID, key: Data, validUntil: Date, fileProtocol: Int? = nil) {
+        self.fileProtocol = fileProtocol
         self.service = service
         self.key = key
         self.validUntil = validUntil
         self.untilStopped = nil
     }
 
-    public init(service: UUID, key: Data, untilStopped: Bool) {
+    public init(service: UUID, key: Data, untilStopped: Bool, fileProtocol: Int? = nil) {
+        self.fileProtocol = fileProtocol
         self.service = service
         self.key = key
         self.untilStopped = untilStopped
         self.validUntil = untilStopped ? .distantFuture : Date().addingTimeInterval(Self.lifetime)
+    }
+
+    public func supportingFiles() -> Self {
+        if isManualSession { return Self(service: service, key: key, untilStopped: true, fileProtocol: FileTransferLimits.version) }
+        return Self(service: service, key: key, validUntil: validUntil, fileProtocol: FileTransferLimits.version)
     }
 
     public func pasteCode() throws -> String {
@@ -57,7 +65,7 @@ public struct DemoInvitation: Codable {
 }
 
 public struct DemoTransfer: Codable {
-    public enum Kind: String, Codable {
+    public enum Kind: String, Codable, Sendable {
         case text, link, photo, file
     }
     public static let maximumPayload = 10 * 1024 * 1024

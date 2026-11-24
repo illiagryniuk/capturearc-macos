@@ -1,6 +1,7 @@
 import Foundation
 import ClipboardDemoTransport
 import Security
+import Darwin
 
 /// The manifest stores relative file identities, never arbitrary paths supplied by a peer.
 struct IncomingTransferPersistence {
@@ -46,8 +47,17 @@ struct IncomingTransferPersistence {
                                                 attributes: [.posixPermissions: 0o700])
         let records = items.map { Record(id: $0.id, kind: $0.kind, title: $0.title, text: $0.text,
                                          link: $0.kind == .link ? $0.url : nil) }
-        try JSONEncoder().encode(records).write(to: manifest, options: .atomic)
-        try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: manifest.path)
+        // Flush a private temporary manifest before the atomic replacement. A
+        // pre-commit failure leaves the previous manifest and shelf intact.
+        let temporary = directory.appendingPathComponent(".manifest-" + UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: temporary) }
+        guard FileManager.default.createFile(atPath: temporary.path, contents: nil, attributes: [.posixPermissions: 0o600]) else {
+            throw FileTransferError.storage
+        }
+        let handle = try FileHandle(forWritingTo: temporary)
+        do { try handle.write(contentsOf: JSONEncoder().encode(records)); try handle.synchronize(); try handle.close() }
+        catch { try? handle.close(); throw error }
+        guard rename(temporary.path, manifest.path) == 0 else { throw FileTransferError.storage }
     }
 
     func removeFile(for item: IncomingTransfer) throws {

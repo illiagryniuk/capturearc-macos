@@ -1,0 +1,52 @@
+$ sw_vers
+ProductName:		macOS
+ProductVersion:		27.2.1
+BuildVersion:		26B131
+exit=0
+$ swift --version
+Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+Target: arm64-apple-macosx27.2.0
+swift-driver version: 1.168.6
+exit=0
+$ xcodebuild -version
+Xcode 27.2
+Build version 27B52
+exit=0
+$ file .build/release/NotchShelf DerivedData/LargeFilesDevice/Build/Products/Release-iphoneos/CaptureArcSender.app/CaptureArcSender
+.build/release/NotchShelf:                                                                          Mach-O 64-bit executable arm64
+DerivedData/LargeFilesDevice/Build/Products/Release-iphoneos/CaptureArcSender.app/CaptureArcSender: Mach-O 64-bit executable arm64
+exit=0
+$ xcrun vtool -show-build .build/release/NotchShelf
+.build/release/NotchShelf:
+Load command 11
+      cmd LC_BUILD_VERSION
+  cmdsize 32
+ platform MACOS
+    minos 13.0
+      sdk 13.0
+   ntools 1
+     tool LD
+  version 27106.1
+exit=0
+$ xcrun vtool -show-build DerivedData/LargeFilesDevice/Build/Products/Release-iphoneos/CaptureArcSender.app/CaptureArcSender
+DerivedData/LargeFilesDevice/Build/Products/Release-iphoneos/CaptureArcSender.app/CaptureArcSender:
+Load command 11
+      cmd LC_BUILD_VERSION
+  cmdsize 32
+ platform IOS
+    minos 17.0
+      sdk 27.2
+   ntools 1
+     tool LD
+  version 27106.1
+exit=0
+Mac Release
+Build complete! (14,09 secs)
+iOS app + Share extension Release
+** BUILD SUCCEEDED **
+DerivedData/LargeFilesDevice/Build/Products/Release-iphoneos/CaptureArcSender.app/PrivacyInfo.xcprivacy
+[{'NSPrivacyAccessedAPIType': 'NSPrivacyAccessedAPICategoryFileTimestamp', 'NSPrivacyAccessedAPITypeReasons': ['C617.1', '3B52.1']}, {'NSPrivacyAccessedAPIType': 'NSPrivacyAccessedAPICategoryDiskSpace', 'NSPrivacyAccessedAPITypeReasons': ['E174.1']}, {'NSPrivacyAccessedAPIType': 'NSPrivacyAccessedAPICategorySystemBootTime', 'NSPrivacyAccessedAPITypeReasons': ['35F9.1']}]
+DerivedData/LargeFilesDevice/Build/Products/Release-iphoneos/CaptureArcSender.app/PlugIns/CaptureArcShare.appex/PrivacyInfo.xcprivacy
+[{'NSPrivacyAccessedAPIType': 'NSPrivacyAccessedAPICategoryFileTimestamp', 'NSPrivacyAccessedAPITypeReasons': ['C617.1', '3B52.1']}, {'NSPrivacyAccessedAPIType': 'NSPrivacyAccessedAPICategoryDiskSpace', 'NSPrivacyAccessedAPITypeReasons': ['E174.1']}, {'NSPrivacyAccessedAPIType': 'NSPrivacyAccessedAPICategorySystemBootTime', 'NSPrivacyAccessedAPITypeReasons': ['35F9.1']}]
+Physical phone targeted read-only inspection: CaptureArc Sender, com.illiagryniuk.capturearc.sender, 1.0 (1). No installation performed.
+Mac binary and iOS device app are arm64 compile artifacts, not distribution packages. iOS device build used CODE_SIGNING_ALLOWED=NO.

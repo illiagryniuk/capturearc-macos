@@ -8,7 +8,7 @@ private let transportLog = Logger(subsystem: "com.illiagryniuk.capturearc.clipbo
 
 private let demoCipher = tls_ciphersuite_t(rawValue: UInt16(TLS_PSK_WITH_AES_128_GCM_SHA256))!
 
-private func demoParameters(_ invitation: DemoInvitation, loopback: Bool = false) -> NWParameters {
+func demoParameters(_ invitation: DemoInvitation, loopback: Bool = false) -> NWParameters {
     let tls = NWProtocolTLS.Options()
     let options = tls.securityProtocolOptions
     sec_protocol_options_set_min_tls_protocol_version(options, .TLSv12)
@@ -22,7 +22,7 @@ private func demoParameters(_ invitation: DemoInvitation, loopback: Bool = false
     return params
 }
 
-private func negotiatedDemoTLS(_ connection: NWConnection) -> Bool {
+func negotiatedDemoTLS(_ connection: NWConnection) -> Bool {
     guard let metadata = connection.metadata(definition: NWProtocolTLS.definition)
         as? NWProtocolTLS.Metadata else { return false }
     return sec_protocol_metadata_get_negotiated_tls_ciphersuite(metadata.securityProtocolMetadata) == demoCipher
@@ -41,11 +41,12 @@ private func receiveExactly(_ count: Int, over connection: NWConnection, done: @
 }
 
 public final class DemoReceiver {
-    private let queue = DispatchQueue(label: "capturearc.demo.receiver")
+    private let queue = DispatchQueue(label: "capturearc.demo.receiver", autoreleaseFrequency: .workItem)
     private let listener: NWListener
     private let invitation: DemoInvitation
     private var running = false
     private var active: [UUID: NWConnection] = [:]
+    private var streams: [UUID: FileReceiveSession] = [:]
     public typealias Intake = (DemoTransfer, @escaping (Bool) -> Void) -> Void
 
     public convenience init(invitation: DemoInvitation) throws {
@@ -68,7 +69,7 @@ public final class DemoReceiver {
         }
     }
 
-    public func start(status: @escaping (String) -> Void, intake: @escaping Intake) {
+    public func start(status: @escaping (String) -> Void, files: FileReceiveOptions? = nil, intake: @escaping Intake) {
         queue.async { [self] in
             guard !running else { return }
             running = true
@@ -83,7 +84,7 @@ public final class DemoReceiver {
                 }
             }
             listener.newConnectionHandler = { [weak self] link in
-                self?.accept(link, intake: intake)
+                self?.accept(link, files: files, intake: intake)
             }
             listener.start(queue: queue)
             if !invitation.isManualSession {
@@ -96,16 +97,21 @@ public final class DemoReceiver {
         }
     }
 
+    public func cancelFileTransfer() { queue.async { [self] in
+        Array(streams.values).forEach { $0.finish(.failure(DemoWireError.cancelled)) }
+    } }
+
     public func stop() { queue.async { [self] in end() } }
 
     private func end() {
         running = false
+        Array(streams.values).forEach { $0.finish(.failure(DemoWireError.cancelled)) }
         listener.cancel()
         active.values.forEach { $0.cancel() }
         active.removeAll()
     }
 
-    private func accept(_ link: NWConnection, intake: @escaping Intake) {
+    private func accept(_ link: NWConnection, files: FileReceiveOptions?, intake: @escaping Intake) {
         guard running, active.count < 2, invitation.isValid() else {
             link.cancel()
             return
@@ -124,11 +130,24 @@ public final class DemoReceiver {
                 transportLog.notice("peer_tls_authenticated")
                 link.stateUpdateHandler = nil
                 receiveExactly(4, over: link) { [weak self, weak link] result in
-                    guard let self, let link, let header = try? result.get(),
-                          let count = try? DemoTransfer.length(header) else {
+                    guard let self, let link, let header = try? result.get() else {
                         transportLog.error("frame_header_rejected")
                         self?.disconnect(id); return
                     }
+                    if header == FileTransferLimits.magic {
+                        let unavailable: FileTransferError? = files == nil ? .protocolMismatch : (self.streams.isEmpty ? nil : .busy)
+                        let options = files ?? FileReceiveOptions(directory: FileManager.default.temporaryDirectory,
+                                                                  admit: { _, reply in reply(false) }, save: { _, reply in reply(.failure(FileTransferError.protocolMismatch)) })
+                        let session = FileReceiveSession(link: link, queue: self.queue, options: options) { [weak self] _ in
+                            self?.streams.removeValue(forKey: id)
+                            self?.disconnect(id)
+                        }
+                        session.admissionError = unavailable
+                        self.streams[id] = session
+                        session.begin()
+                        return
+                    }
+                    guard let count = try? DemoTransfer.length(header) else { self.disconnect(id); return }
                     transportLog.notice("frame_header_received")
                     receiveExactly(count, over: link) { [weak self, weak link] result in
                         guard let self, let link else { return }
@@ -168,7 +187,7 @@ public final class DemoReceiver {
             }
         }
         queue.asyncAfter(deadline: .now() + DemoTransfer.connectionTimeout) { [weak self] in
-            guard let self, self.active[id] != nil else { return }
+            guard let self, self.active[id] != nil, self.streams[id] == nil else { return }
             transportLog.notice("peer_deadline_cleanup")
             self.disconnect(id)
         }
@@ -184,9 +203,9 @@ public final class DemoReceiver {
 }
 
 public final class DemoSender {
-    private let queue = DispatchQueue(label: "capturearc.demo.sender")
-    private var active: NWConnection?
-    private var cancelActive: (() -> Void)?
+    let queue = DispatchQueue(label: "capturearc.demo.sender", autoreleaseFrequency: .workItem)
+    var active: NWConnection?
+    var cancelActive: (() -> Void)?
 
     public init() {}
 

@@ -1,5 +1,6 @@
 import AppKit
 import ImageIO
+import UniformTypeIdentifiers
 
 extension IncomingTransfer {
     /// A bounded preview; drag and copy always use the complete original text.
@@ -10,7 +11,12 @@ extension IncomingTransfer {
         guard let url else { return NSItemProvider() }
         if url.isFileURL {
             // Offer original file bytes to image/document apps and the file URL to Finder.
-            let provider = NSItemProvider(contentsOf: url) ?? NSItemProvider()
+            let provider = NSItemProvider()
+            let type = UTType(filenameExtension: url.pathExtension) ?? .data
+            provider.registerFileRepresentation(forTypeIdentifier: type.identifier, fileOptions: [], visibility: .all) { completion in
+                completion(url, false, nil)
+                return nil
+            }
             provider.registerObject(url as NSURL, visibility: .all)
             provider.suggestedName = title
             return provider

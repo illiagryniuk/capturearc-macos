@@ -52,7 +52,7 @@ struct IncomingTransfer: Identifiable {
 }
 
 struct IncomingTransferStaging {
-    static let maximumFileBytes = DemoTransfer.maximumPayload
+    static let maximumFileBytes = Int(FileTransferLimits.maximumBytes)
     static let maximumTextBytes = DemoTransfer.maximumText
     let directory: URL
 
@@ -78,6 +78,22 @@ struct IncomingTransferStaging {
         }
     }
 
+    func adopt(_ file: TransferFile) throws -> IncomingTransfer {
+        guard !file.cancellation.isCancelled else { throw DemoWireError.cancelled }
+        try file.metadata.check()
+        let values = try file.url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
+        guard values.isRegularFile == true, values.isSymbolicLink != true,
+              values.fileSize.map(Int64.init) == file.metadata.byteCount else { throw FileTransferError.integrity }
+        let id = UUID()
+        let folder = directory.appendingPathComponent(id.uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
+        let destination = folder.appendingPathComponent(file.metadata.name)
+        do { try FileManager.default.moveItem(at: file.url, to: destination) }
+        catch { try? FileManager.default.removeItem(at: folder); throw error }
+        return IncomingTransfer(id: id, kind: file.metadata.kind == .photo ? .photo : .file,
+                                title: file.metadata.name, text: nil, url: destination)
+    }
+
     static func validateName(_ name: String) throws {
         guard !name.isEmpty, !name.hasPrefix("."), name.utf8.count <= 200,
               !name.contains("/"), !name.contains("\\"), !name.contains(":"),
@@ -88,7 +104,7 @@ struct IncomingTransferStaging {
 
     private func stageFile(id: UUID, kind: IncomingTransfer.Kind, name: String, data: Data) throws -> IncomingTransfer {
         try Self.validateName(name)
-        guard !data.isEmpty, data.count <= Self.maximumFileBytes else { throw IncomingTransferError.invalidSize }
+        guard !data.isEmpty, data.count <= DemoTransfer.maximumPayload else { throw IncomingTransferError.invalidSize }
         let folder = directory.appendingPathComponent(id.uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true,
                                                 attributes: [.posixPermissions: 0o700])

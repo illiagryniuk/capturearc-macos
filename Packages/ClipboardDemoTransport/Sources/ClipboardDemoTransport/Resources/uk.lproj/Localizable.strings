@@ -93,3 +93,17 @@
 "To send part of a note, select the text and use Share in the selection menu. If Share is unavailable, copy the selection and paste it here. The top Share button in Notes sends the whole note." = "Щоб надіслати лише частину нотатки, виберіть текст і натисніть «Поділитися» в меню виділення. Якщо цієї дії немає, скопіюйте текст і вставте його тут. Кнопка «Поділитися» зверху в Notes надсилає всю нотатку.";
 "Screenshots" = "Знімки екрана";
 "Files" = "Файли";
+
+/* File streaming */
+"For files over 10 MiB, update CaptureArc on both devices and scan the Mac QR code again." = "Для файлів понад 10 МіБ оновіть CaptureArc на обох пристроях і знову відскануйте QR-код на Mac.";
+"The file exceeds the 1 GiB limit." = "Розмір файлу перевищує 1 ГіБ.";
+"Not enough free storage. Free space on the sending and receiving devices, then try again." = "Недостатньо вільного місця. Звільніть місце на обох пристроях і повторіть спробу.";
+"Choose a nonempty file. Export folders as an archive first." = "Виберіть непорожній файл. Спочатку експортуйте папку як архів.";
+"The file changed while preparing the transfer. Try again." = "Файл змінився під час підготовки передачі. Повторіть спробу.";
+"The file could not be verified. It was not saved." = "Не вдалося перевірити файл. Його не збережено.";
+"The file could not be saved. Check available storage and try again." = "Не вдалося зберегти файл. Перевірте вільне місце й повторіть спробу.";
+"Update CaptureArc on both devices and scan the Mac QR code again." = "Оновіть CaptureArc на обох пристроях і знову відскануйте QR-код на Mac.";
+"Waiting for Mac to save and verify…" = "Очікування збереження та перевірки на Mac…";
+"Choose a Photo or File (up to 1 GiB)" = "Вибрати фото або файл (до 1 ГіБ)";
+"Files and photos: up to 1 GiB with updated apps and pairing. Selected text: up to 1 MiB." = "Файли та фото: до 1 ГіБ після оновлення програм і сполучення. Вибраний текст: до 1 МіБ.";
+"Preparing the file timed out. Download it on your iPhone first, then share it again." = "Час підготовки файлу вичерпано. Спочатку завантажте його на iPhone, а потім поділіться знову.";

@@ -21,6 +21,8 @@ private struct SenderView: View {
     @State private var code = ""
     @State private var status = ""
     @State private var sender = DemoSender()
+    @State private var progress: FileTransferProgress?
+    @State private var preparation = TransferCancellation()
     @State private var permissionBrowser: NWBrowser?
 
     var body: some View {
@@ -47,17 +49,19 @@ private struct SenderView: View {
                         Text(CaptureArcText.value("On your Mac, open From iPhone in CaptureArc, then choose Pair iPhone."))
                     }
                 }
+                .disabled(sending)
                 Section(CaptureArcText.value("Send")) {
                     Toggle(CaptureArcText.value("Send as web link"), isOn: $linkMode)
                     TextField(CaptureArcText.value("Text or HTTPS link"), text: $bodyText, axis: .vertical)
                     Button(CaptureArcText.value("Send to Mac")) {
-                        send(DemoTransfer(kind: linkMode ? .link : .text, bytes: Data(bodyText.utf8)))
-                    }.disabled(bodyText.isEmpty)
+                        send(.inline(DemoTransfer(kind: linkMode ? .link : .text, bytes: Data(bodyText.utf8))))
+                    }.disabled(bodyText.isEmpty || sending)
                     if sending {
-                        ProgressView()
-                        Button(CaptureArcText.value("Cancel")) { sender.cancel() }
+                        if let progress { ProgressView(value: progress.fraction); Text(progress.label).font(.caption) }
+                        else { ProgressView() }
+                        Button(CaptureArcText.value("Cancel")) { preparation.cancel(); sender.cancel() }
                     }
-                    Button(CaptureArcText.value("Choose a Photo or File (up to 10 MB)")) { importing = true }
+                    Button(CaptureArcText.value("Choose a Photo or File (up to 1 GiB)")) { importing = true }.disabled(sending)
                 }
                 .disabled(invitation == nil)
                 if !status.isEmpty { Section { Text(status).accessibilityAddTraits(.updatesFrequently) } }
@@ -67,7 +71,7 @@ private struct SenderView: View {
                 Section {
                     Text(CaptureArcText.value("Requires CaptureArc 1.2 or later on your Mac."))
                     Text(CaptureArcText.value("Both devices must be on the same Wi-Fi network."))
-                    Text(CaptureArcText.value("Photos and files can be up to 10 MB each. Text can be up to 1 MB."))
+                    Text(CaptureArcText.value("Files and photos: up to 1 GiB with updated apps and pairing. Selected text: up to 1 MiB."))
                     Link(CaptureArcText.value("Help"), destination: URL(string: "https://illiagryniuk.github.io/capturearc-macos/support.html")!)
                     Link(CaptureArcText.value("Privacy Policy"), destination: URL(string: "https://illiagryniuk.github.io/capturearc-macos/privacy.html")!)
                 }.font(.footnote)
@@ -80,18 +84,29 @@ private struct SenderView: View {
             QRScanner { scanned in scanning = false; pair(scanned) }
         }
         .fileImporter(isPresented: $importing, allowedContentTypes: [.data]) { result in
+            guard let invitation, !sending else { return }
             do {
                 let url = try result.get()
-                let scoped = url.startAccessingSecurityScopedResource()
-                defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-                let values = try url.resourceValues(forKeys: [.contentTypeKey, .isRegularFileKey])
-                guard values.isRegularFile == true else { throw DemoWireError.badFrame }
-                let reader = try FileHandle(forReadingFrom: url)
-                defer { try? reader.close() }
-                let data = try reader.read(upToCount: DemoTransfer.maximumPayload + 1) ?? Data()
-                guard !data.isEmpty, data.count <= DemoTransfer.maximumPayload else { throw DemoWireError.badFrame }
-                send(DemoTransfer(kind: values.contentType?.conforms(to: .image) == true ? .photo : .file,
-                                  bytes: data, name: url.lastPathComponent))
+                sending = true; progress = nil
+                status = CaptureArcText.value("Preparing transfer…")
+                let cancellation = TransferCancellation(); preparation = cancellation
+                DispatchQueue.global(qos: .userInitiated).async {
+                    let outcome: Result<TransferFile, Error> = Result {
+                        let scoped = url.startAccessingSecurityScopedResource()
+                        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+                        let type = try url.resourceValues(forKeys: [.contentTypeKey]).contentType
+                        return try TransferFile.prepare(url, kind: type?.conforms(to: .image) == true ? .photo : .file,
+                                                        invitation: invitation, cancelled: { cancellation.isCancelled })
+                    }
+                    DispatchQueue.main.async {
+                        sending = false
+                        guard !cancellation.isCancelled else { status = DemoWireError.cancelled.localizedDescription; return }
+                        switch outcome {
+                        case .success(let file): send(.file(file))
+                        case .failure(let error): status = error.localizedDescription
+                        }
+                    }
+                }
             } catch { status = error.localizedDescription }
         }
     }
@@ -139,11 +154,17 @@ private struct SenderView: View {
         } catch { status = error.localizedDescription }
     }
 
-    private func send(_ item: DemoTransfer) {
+    private func send(_ item: OutgoingItem) {
         guard let invitation, !sending else { return }
         sending = true
+        progress = nil
         status = CaptureArcText.value("Sending…")
-        sender.transmit(item, invitation: invitation) { result in
+        sender.transmit(item, invitation: invitation, progress: { value in
+            DispatchQueue.main.async {
+                progress = value
+                if value.fraction == 1 { status = CaptureArcText.value("Waiting for Mac to save and verify…") }
+            }
+        }) { result in
             DispatchQueue.main.async {
                 sending = false
                 switch result {

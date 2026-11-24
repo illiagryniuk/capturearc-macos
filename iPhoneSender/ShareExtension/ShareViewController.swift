@@ -26,6 +26,7 @@ final class ShareViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         transferTask?.cancel()
+        model.cancellation.cancel()
         model.sender.cancel()
     }
 
@@ -46,9 +47,10 @@ final class ShareViewController: UIViewController {
         do {
             for (index, provider) in providers.enumerated() {
                 try Task.checkCancellation()
+                model.progress = nil
                 model.title = CaptureArcText.value("Sending to Mac…")
                 model.detail = CaptureArcText.format("Item %d of %d", index + 1, providers.count)
-                let item = try await SharedItemLoader.load(provider, index: index + 1)
+                let item = try await SharedItemLoader.loadOutgoing(provider, index: index + 1, invitation: invitation, cancellation: model.cancellation)
                 try Task.checkCancellation()
                 try await model.transmit(item, invitation: invitation)
                 count += 1
@@ -67,6 +69,7 @@ final class ShareViewController: UIViewController {
 
     private func finish() {
         transferTask?.cancel()
+        model.cancellation.cancel()
         model.sender.cancel()
         extensionContext?.completeRequest(returningItems: nil)
     }
@@ -79,6 +82,8 @@ private final class ShareModel: ObservableObject {
     @Published var busy = true
     @Published var succeeded = false
     let sender = DemoSender()
+    let cancellation = TransferCancellation()
+    @Published var progress: FileTransferProgress?
 
     func fail(_ title: String, detail: String) {
         self.title = title
@@ -86,9 +91,11 @@ private final class ShareModel: ObservableObject {
         busy = false
     }
 
-    func transmit(_ item: DemoTransfer, invitation: DemoInvitation) async throws {
+    func transmit(_ item: OutgoingItem, invitation: DemoInvitation) async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            sender.transmit(item, invitation: invitation) { continuation.resume(with: $0) }
+            sender.transmit(item, invitation: invitation, progress: { [weak self] value in
+                Task { @MainActor in self?.progress = value }
+            }) { continuation.resume(with: $0) }
         }
     }
 }
@@ -102,7 +109,13 @@ private struct ShareView: View {
                 .font(.system(size: 42)).foregroundStyle(model.succeeded ? .green : .accentColor)
             Text(model.title).font(.title2.bold())
             Text(model.detail).font(.body).foregroundStyle(.secondary).multilineTextAlignment(.center)
-            if model.busy { ProgressView() }
+            if model.busy {
+                if let progress = model.progress {
+                    ProgressView(value: progress.fraction)
+                    Text(progress.label).font(.caption)
+                    if progress.fraction == 1 { Text(CaptureArcText.value("Waiting for Mac to save and verify…")).font(.caption) }
+                } else { ProgressView() }
+            }
             Button(model.busy ? CaptureArcText.value("Cancel") : CaptureArcText.value("Done"), action: done)
                 .buttonStyle(.borderedProminent)
         }.padding(28).frame(maxWidth: .infinity, maxHeight: .infinity)

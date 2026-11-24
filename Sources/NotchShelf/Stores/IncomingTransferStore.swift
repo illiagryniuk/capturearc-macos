@@ -12,6 +12,7 @@ final class IncomingTransferStore: ObservableObject {
     @Published private(set) var pairingStatus = CaptureArcText.value("No iPhone paired")
     @Published private(set) var hasReceived = false
     @Published private(set) var clipboardStatus: String?
+    @Published private(set) var transferProgress: FileTransferProgress?
     private let pasteboard: NSPasteboard
     private var receiver: DemoReceiver?
     private var generation: UUID?
@@ -64,6 +65,17 @@ final class IncomingTransferStore: ObservableObject {
         }
     }
 
+    func receiveFromPhone(_ file: TransferFile) throws {
+        guard !restoreFailed, items.count < 20 else { throw IncomingTransferError.full }
+        let item = try staging.adopt(file)
+        do { try persistence.save([item] + items) }
+        catch { try? persistence.removeFile(for: item); throw error }
+        items.insert(item, at: 0)
+        hasReceived = true; clipboardStatus = nil; error = nil
+    }
+
+    func cancelTransfer() { receiver?.cancelFileTransfer() }
+
     var canPair: Bool { true }
 
     func startPairing() {
@@ -76,7 +88,8 @@ final class IncomingTransferStore: ObservableObject {
         } catch { stopReceiver(); self.error = error.localizedDescription }
     }
 
-    private func startReceiver(_ invitation: DemoInvitation) throws {
+    private func startReceiver(_ savedInvitation: DemoInvitation) throws {
+        let invitation = savedInvitation.supportingFiles()
         let id = invitation.service
             let receiver = try DemoReceiver(invitation: invitation)
             generation = id
@@ -88,7 +101,31 @@ final class IncomingTransferStore: ObservableObject {
                     guard let self, self.generation == id else { return }
                     self.pairingStatus = status
                 }
-            }, intake: { [weak self] item, reply in
+            }, files: FileReceiveOptions(directory: staging.directory.appendingPathComponent(".partial", isDirectory: true),
+                admit: { [weak self] _, reply in
+                    DispatchQueue.main.async {
+                        guard let self, self.generation == id else { reply(false); return }
+                        reply(!self.restoreFailed && self.items.count < 20)
+                    }
+                }, save: { [weak self] file, reply in
+                    DispatchQueue.main.async {
+                        guard let self, self.generation == id, invitation.isValid(), !file.cancellation.isCancelled else {
+                            reply(.failure(DemoWireError.cancelled)); return
+                        }
+                        do { try self.receiveFromPhone(file); reply(.success(())) }
+                        catch { self.error = error.localizedDescription; reply(.failure(error)) }
+                    }
+                }, progress: { [weak self] progress in
+                    DispatchQueue.main.async {
+                        guard let self, self.generation == id else { return }
+                        self.transferProgress = progress
+                    }
+                }, failure: { [weak self] error in
+                    DispatchQueue.main.async {
+                        guard let self, self.generation == id else { return }
+                        self.error = error.localizedDescription
+                    }
+                }), intake: { [weak self] item, reply in
                 DispatchQueue.main.async {
                     guard let self, self.generation == id, invitation.isValid() else { reply(false); return }
                     do {
@@ -133,6 +170,7 @@ final class IncomingTransferStore: ObservableObject {
 
     private func stopReceiver() {
         generation = nil
+        transferProgress = nil
         receiver?.stop()
         receiver = nil
         invitationCode = nil
