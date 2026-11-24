@@ -1,5 +1,6 @@
-import ClipboardDemoTransport
+@testable import ClipboardDemoTransport
 import CryptoKit
+import Network
 import Darwin
 import UIKit
 import UniformTypeIdentifiers
@@ -7,6 +8,119 @@ import XCTest
 @testable import CaptureArcSender
 
 final class ShareInputTests: XCTestCase {
+    func testPairedWiFiPathDiagnostic() async throws {
+        guard Bundle(for: Self.self).url(forResource: "CaptureArc-QA-Pairing", withExtension: "txt") != nil else {
+            throw XCTSkip("Optional paired QA diagnostic")
+        }
+        let result: String = await withCheckedContinuation { continuation in
+            let monitor = NWPathMonitor(requiredInterfaceType: .wifi)
+            let queue = DispatchQueue(label: "capturearc.synthetic.path")
+            var finished = false
+            let finish: (String) -> Void = { message in
+                guard !finished else { return }; finished = true
+                monitor.cancel(); continuation.resume(returning: message)
+            }
+            monitor.pathUpdateHandler = { path in
+                finish("status=\(path.status), reason=\(path.unsatisfiedReason), wifi=\(path.usesInterfaceType(.wifi)), interfaces=\(path.availableInterfaces.map { String(describing: $0.type) }.joined(separator: ","))")
+            }
+            monitor.start(queue: queue)
+            queue.asyncAfter(deadline: .now() + 5) { finish("no path update within 5 seconds") }
+        }
+        print("Synthetic paired Wi-Fi path: \(result)")
+        let code = try String(contentsOf: Bundle(for: Self.self).url(forResource: "CaptureArc-QA-Pairing", withExtension: "txt")!, encoding: .utf8)
+        let invitation = try DemoInvitation.parse(code)
+        let connectionResult: String = await withCheckedContinuation { continuation in
+            let link = NWConnection(to: .service(name: invitation.service.uuidString, type: DemoInvitation.serviceType, domain: "local.", interface: nil), using: demoParameters(invitation))
+            let queue = DispatchQueue(label: "capturearc.synthetic.connection")
+            var finished = false
+            var stateDescription = "setup"
+            let finish: (String) -> Void = { message in
+                guard !finished else { return }; finished = true
+                link.stateUpdateHandler = nil; link.cancel(); continuation.resume(returning: message)
+            }
+            link.stateUpdateHandler = { state in
+                switch state {
+                case .ready: finish("ready; expected authenticated TLS=\(negotiatedDemoTLS(link))")
+                case .waiting(let error): stateDescription = "waiting: \(error)"
+                case .failed(let error): finish("failed: \(error)")
+                default: break
+                }
+            }
+            link.start(queue: queue)
+            queue.asyncAfter(deadline: .now() + 5) { finish(stateDescription) }
+        }
+        print("Synthetic paired authenticated endpoint: \(connectionResult)")
+    }
+
+    // Optional device/simulator integration test. The private pairing resource is
+    // injected into the signed test bundle locally, never into the shipping app.
+    func testPairedReceiverThroughShareProvider() async throws {
+        guard let config = Bundle(for: Self.self).url(forResource: "CaptureArc-QA-Pairing", withExtension: "txt") else {
+            throw XCTSkip("Requires an isolated QA receiver and private test-bundle pairing resource")
+        }
+        let invitation = try DemoInvitation.parse(String(contentsOf: config, encoding: .utf8))
+        let sender = DemoSender()
+        func send(_ provider: NSItemProvider, label: String) async throws {
+            let item = try await SharedItemLoader.loadOutgoing(provider, invitation: invitation)
+            if case .file(let file) = item {
+                let reader = try FileHandle(forReadingFrom: file.url)
+                var hash = SHA256()
+                while true {
+                    let more = try autoreleasepool { () throws -> Bool in
+                        let data = try reader.read(upToCount: FileTransferLimits.chunkBytes) ?? Data()
+                        if data.isEmpty { return false }; hash.update(data: data); return true
+                    }
+                    if !more { break }
+                }
+                try reader.close()
+                let digest = hash.finalize().map { String(format: "%02x", $0) }.joined()
+                print("Synthetic paired source: \(label), bytes=\(file.metadata.byteCount), SHA256=\(digest)")
+            }
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                sender.transmit(item, invitation: invitation) { continuation.resume(with: $0) }
+            }
+            print("Synthetic paired saved-file ACK: \(label)")
+        }
+        try await send(NSItemProvider(object: "Synthetic selected text — paired QA" as NSString), label: "selected text")
+        try await send(NSItemProvider(object: URL(string: "https://example.com/capturearc-synthetic-qa")! as NSURL), label: "link")
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("PairedSynthetic-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        // Deterministic noisy pixels produce a real PNG larger than 1 MiB.
+        var pixels = [UInt8](repeating: 0, count: 1024 * 1024 * 4)
+        var seed: UInt32 = 12345
+        for index in stride(from: 0, to: pixels.count, by: 4) {
+            for channel in 0..<3 { seed = 1664525 &* seed &+ 1013904223; pixels[index + channel] = UInt8(truncatingIfNeeded: seed >> 24) }
+            pixels[index + 3] = 255
+        }
+        let bitmap = CGDataProvider(data: Data(pixels) as CFData)!
+        let cg = CGImage(width: 1024, height: 1024, bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: 4096,
+                         space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.last.rawValue),
+                         provider: bitmap, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
+        let png = try XCTUnwrap(UIImage(cgImage: cg).pngData())
+        XCTAssertGreaterThan(png.count, 1024 * 1024)
+        let photo = directory.appendingPathComponent("synthetic-photo-over-1MiB.png")
+        try png.write(to: photo)
+        try await send(try XCTUnwrap(NSItemProvider(contentsOf: photo)), label: photo.lastPathComponent)
+        for (name, size) in [("synthetic-transcript-11MiB.txt", Int64(11 * 1024 * 1024 + 17)),
+                              ("synthetic-hour-48k.wav", Int64(345600044)),
+                              ("synthetic-exact-1GiB.vtbackup", FileTransferLimits.maximumBytes)] {
+            let url = directory.appendingPathComponent(name)
+            FileManager.default.createFile(atPath: url.path, contents: nil)
+            let writer = try FileHandle(forWritingTo: url)
+            try writer.truncate(atOffset: UInt64(size))
+            if name.hasSuffix(".wav") {
+                var header = Data("RIFF".utf8)
+                func append<T: FixedWidthInteger>(_ value: T) { var v = value.littleEndian; withUnsafeBytes(of: &v) { header.append(contentsOf: $0) } }
+                append(UInt32(size - 8)); header.append(Data("WAVEfmt ".utf8)); append(UInt32(16)); append(UInt16(1)); append(UInt16(1))
+                append(UInt32(48000)); append(UInt32(96000)); append(UInt16(2)); append(UInt16(16)); header.append(Data("data".utf8)); append(UInt32(size - 44))
+                try writer.write(contentsOf: header)
+            }
+            try writer.close()
+            try await send(try XCTUnwrap(NSItemProvider(contentsOf: url)), label: name)
+        }
+    }
+
     private var fileInvitation: DemoInvitation {
         DemoInvitation(service: UUID(), key: Data(repeating: 8, count: 32), untilStopped: true).supportingFiles()
     }

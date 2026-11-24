@@ -12,7 +12,7 @@ xcodebuild -project "$ROOT_DIR/iPhoneSender/CaptureArcSender.xcodeproj" \
   -archivePath "$ARCHIVE_PATH" -derivedDataPath "$OUTPUT_DIR/DerivedData" \
   -allowProvisioningUpdates \
   MARKETING_VERSION="${CAPTUREARC_IPHONE_VERSION:-1.0}" \
-  CURRENT_PROJECT_VERSION="${CAPTUREARC_IPHONE_BUILD:-1}" archive
+  CURRENT_PROJECT_VERSION="${CAPTUREARC_IPHONE_BUILD:-2}" archive
 if [[ "$MODE" == --export ]]; then
   xcodebuild -exportArchive -archivePath "$ARCHIVE_PATH" \
     -exportOptionsPlist "$ROOT_DIR/release/PhoneMac/iPhone-AppStore-Export.plist" \

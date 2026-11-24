@@ -10,12 +10,13 @@ Use an iPhone running iOS 17+ and a Mac running macOS 13+, connected to the same
 3. Enter a short synthetic message in Sender and choose **Send to Mac**. Sender confirms success only after the Mac receives and stores the item. The Mac's clipboard now contains that text.
 4. In Photos, select one or more small images → Share → More → **CaptureArc**. The Mac displays photo cards; drag a card into another app. Originals remain on iPhone.
 5. In Safari, use Share → CaptureArc to send a web link. For selected text, use the text selection menu. Notes' top Share button intentionally shares the whole note; select/copy and paste into Sender if the source app does not expose selection sharing.
-6. On Mac, **Stop Receiving** revokes that pairing. A new pairing uses a new secret. Closing the app pauses reception; reopening resumes a saved pairing. The phone's **Forget Mac** clears its saved pairing.
+6. Share a `.txt` document, audio export or backup archive through Files → Share → CaptureArc. Documents remain draggable file cards and do not replace the clipboard. Keep Sender/the Share sheet open until receipt is confirmed. Files larger than 1 GiB are rejected; adequate free temporary storage is required on both devices.
+7. On Mac, **Stop Receiving** revokes that pairing. A new pairing uses a new secret. Closing the app pauses reception; reopening resumes a saved pairing. The phone's **Forget Mac** clears its saved pairing.
 
-Up to five items per share; text up to 1 MiB, each photo/file up to 10 MiB, twenty received cards on Mac. At capacity, remove cards and retry. All payloads are transferred over Apple's Network/Security TLS APIs with a randomly generated shared key. No account creation/deletion flow is applicable.
+Up to five items per share; text up to 1 MiB, each photo/file up to 1 GiB with updated apps and a fresh QR scan, twenty received cards on Mac. At capacity, remove cards and retry. All payloads are transferred over Apple's Network/Security TLS APIs with a randomly generated shared key. No account creation/deletion flow is applicable.
 
 ## Mac's existing capture feature
 Authorize only a disposable capture folder in setup. Choose that same folder in Shift–Command–5 → Options → Save to. CaptureArc observes saved captures; it does not capture the screen or require Screen Recording, Accessibility, or Full Disk Access. The Files tab can keep user-authorized folders in persistent tabs.
 
-## Submission order
-Submit/release the Mac update before submitting the iPhone companion so the review team and users can obtain the required Mac 1.2 publicly. Keep manual release selected on both records. Do not provide a real pairing QR, secret, or personal content in review attachments. Add verified review contact details in App Store Connect after sign-in.
+## Paired review and manual release
+These candidates are CaptureArc Mac 1.2 (5), Apple ID 6789554439, and CaptureArc Sender iPhone 1.0 (2), Apple ID 6837705742. Please coordinate review of the companion builds; Mac 1.1 currently available publicly does not support iPhone reception. Keep manual release selected on both records, and make the compatible Mac update available before public release of Sender. Do not provide a real pairing QR, secret, or personal content in review attachments. Add verified review contact details in App Store Connect after sign-in.

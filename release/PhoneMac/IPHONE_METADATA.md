@@ -1,6 +1,6 @@
 # CaptureArc Sender for iPhone 1.0 — separate app draft
 
-**Current status:** The separate record is created with Apple ID **6837705742**, and version **1.0 (1)** is uploaded and processed. See [STORE_STATUS.md](STORE_STATUS.md); do not upload this build again. The proposed name/SKU below are confirmed record values.
+**Current status (24 November 2026):** Separate app record **6837705742**. New large-file candidate **1.0 (2)** uploaded successfully through Xcode; Apple reported that the package is processing. This is not an App Review submission. The prior selected draft build was 1.0 (1). Do not upload build 2 again. Current record selection and unresolved declarations require reconciliation in App Store Connect.
 
 Create a **separate iOS app record**, not another platform on the Mac record.
 
@@ -8,7 +8,7 @@ Create a **separate iOS app record**, not another platform on the Mac record.
 - Bundle ID: **com.illiagryniuk.capturearc.sender**.
 - Embedded Share extension: **com.illiagryniuk.capturearc.sender.share**.
 - SKU: **CaptureArcSender-iOS**.
-- Version/build: **1.0 (1)**. Minimum iOS 17.0; iPhone only.
+- Version/build: **1.0 (2)**. Minimum iOS 17.0; iPhone only.
 - Primary language: English. Interface supports English and Ukrainian.
 - Category: Utilities. Suggested price: free, matching the Mac companion.
 - Compatibility: keep the native Mac app separate; disable distribution of the iPhone build on Apple-silicon Macs and Apple Vision Pro in App Store Connect if those compatibility options are offered.
@@ -41,7 +41,7 @@ To send part of a note, use Share from the text selection menu. If your source a
 PRIVATE AND DIRECT
 No ads, tracking, account, or CaptureArc cloud service. Your chosen items travel over an encrypted local Wi-Fi connection. The pairing secret is stored in the devices' Keychains. Camera access is used only to scan the Mac's QR code.
 
-Requires CaptureArc 1.2 or later on a Mac running macOS 13 or later. Both devices must be connected to the same Wi-Fi network. Supports up to 5 items per share: photos/files up to 10 MB each and text up to 1 MB. Networks that isolate devices can prevent discovery. This app sends to a Mac; it does not receive transfers from a Mac.
+Requires CaptureArc 1.2 or later on a Mac running macOS 13 or later. Both devices must be connected to the same Wi-Fi network. Supports up to 5 items per share: photos/files up to 1 GiB each with updated Mac 1.2 (5) and a fresh pairing QR, and selected text up to 1 MiB. Networks that isolate devices can prevent discovery. This app sends to a Mac; it does not receive transfers from a Mac.
 
 ## Keywords
 mac,clipboard,photos,text,links,transfer,share,files,wifi,copy,paste,companion
@@ -59,3 +59,5 @@ Privacy: https://illiagryniuk.github.io/capturearc-macos/privacy.html
 
 ## Account fields still requiring the owner/account session
 Confirm name availability, App Review contact details, content rights, updated age-rating questionnaire, EU trader status, pricing/territories, and current agreements in App Store Connect. Reuse verified account information; do not invent contact details or accept agreements automatically.
+
+Large files require free temporary storage on both devices. Keep Sender/the Share sheet open until the Mac confirms receipt. Interrupted transfers must be restarted. The 1 GiB bound is a tested resource limit, not unlimited/background transfer support.

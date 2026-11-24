@@ -1,8 +1,8 @@
 # CaptureArc for Mac 1.2 — store draft
 
-**Current status:** Mac 1.2 draft and six screenshots are saved, and corrected build 1.2 (4) uploaded successfully. See [STORE_STATUS.md](STORE_STATUS.md) for the outstanding processing/selection and submission gates. Do not upload build 4 again.
+**Current status (24 November 2026):** New large-file candidate **1.2 (5)** uploaded successfully through Xcode; Apple reported that the package is processing. This is not an App Review submission. The prior selected draft build was 1.2 (4); current selection could not be reconciled because the browser is signed out. Do not upload build 5 again.
 
-Update the existing app **CaptureArc: Screenshot Shelf**, Apple ID **6789554439**, bundle **com.illiagryniuk.capturearc**. Candidate: **1.2 (4)**, macOS 13+, Apple silicon and Intel. Verify that the version/build are still unused in App Store Connect before uploading; the browser was signed out during preparation.
+Update the existing app **CaptureArc: Screenshot Shelf**, Apple ID **6789554439**, bundle **com.illiagryniuk.capturearc**. Candidate: **1.2 (5)**, macOS 13+, Apple silicon and Intel. The upload receipt is recorded in LARGE_FILE_RELEASE_STATUS.md.
 
 ## Subtitle
 Screenshots, files, iPhone
@@ -32,7 +32,7 @@ YOUR CAPTURE SHELF
 PRIVATE BY DESIGN
 No account, ads, analytics, or CaptureArc cloud service. Transfers use an encrypted local connection. You choose what to send and which folders the Mac app may access.
 
-Requires macOS 13 or later. iPhone sharing requires the separate CaptureArc Sender app on iOS 17 or later, both devices on the same Wi-Fi network, and CaptureArc open on the Mac. Send up to 5 items at a time: photos/files up to 10 MB each, text up to 1 MB. Notes' top Share button shares the whole note; use the selection menu or copy selected text into Sender to send only part of a note.
+Requires macOS 13 or later. iPhone sharing requires the separate CaptureArc Sender app on iOS 17 or later, both devices on the same Wi-Fi network, and CaptureArc open on the Mac. Send up to 5 items at a time: photos/files up to 1 GiB each with updated Sender and a fresh pairing QR, selected text up to 1 MiB. Notes' top Share button shares the whole note; use the selection menu or copy selected text into Sender to send only part of a note.
 
 ## What's New
 Send text, photos, links, and files from your iPhone with the separate CaptureArc Sender app. Received items appear as visual cards, ready to drag and drop. Text is copied automatically for immediate pasting. Pairing and received cards stay available across app restarts, and you can stop receiving or remove cards whenever you choose.
@@ -46,3 +46,5 @@ Support: https://illiagryniuk.github.io/capturearc-macos/support.html
 Marketing: https://illiagryniuk.github.io/capturearc-macos/
 Privacy: https://illiagryniuk.github.io/capturearc-macos/privacy.html
 Publish the prepared website changes before making the new sharing feature public.
+
+Large files require free temporary storage on both devices. Keep Sender/the Share sheet open until the Mac confirms receipt. Interrupted transfers must be restarted. The 1 GiB bound is a tested resource limit, not unlimited/background transfer support.
