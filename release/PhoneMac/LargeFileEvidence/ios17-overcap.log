@@ -1,0 +1,21 @@
+Test Suite 'Selected tests' started at 2026-11-24 22:01:01.980.
+Test Suite 'CaptureArcShareTests.xctest' started at 2026-11-24 22:01:01.980.
+Test Suite 'ShareInputTests' started at 2026-11-24 22:01:01.980.
+Test Case '-[CaptureArcShareTests.ShareInputTests testOverOneGiBFileURLIsRejectedBeforeSnapshot]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testOverOneGiBFileURLIsRejectedBeforeSnapshot]' passed (0.040 seconds).
+Test Suite 'ShareInputTests' passed at 2026-11-24 22:01:02.021.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.040 (0.041) seconds
+Test Suite 'CaptureArcShareTests.xctest' passed at 2026-11-24 22:01:02.021.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.040 (0.041) seconds
+Test Suite 'Selected tests' passed at 2026-11-24 22:01:02.022.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.040 (0.042) seconds
+2026-11-24 22:01:02.309 xcodebuild[439:3161846] [MT] IDETestOperationsObserverDebug: 8.817 elapsed -- Testing started completed.
+2026-11-24 22:01:02.309 xcodebuild[439:3161846] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-24 22:01:02.309 xcodebuild[439:3161846] [MT] IDETestOperationsObserverDebug: 8.817 sec, +8.817 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/illia/Documents/Codex/2026-11-21/task/capturearc-release-prep/capturearc-large-file-streaming/DerivedData/LargeFiles/Logs/Test/Test-CaptureArcSender-2026.11.24_22-00-48-+0200.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

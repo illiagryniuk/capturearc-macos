@@ -1,0 +1,26 @@
+physical-paired-test
+Error Domain=com.apple.dt.deviceprep Code=-3 "Unlock Nothing to Continue" UserInfo={NSRecoveryAttempter=<_DVTErrorRecoveryAttempter: 0x771558a720>, NSLocalizedRecoveryOptions=(
+), NSLocalizedRecoverySuggestion=Xcode cannot launch CaptureArcShareTests on Nothing because the device is locked., DVTRecoveryBlockKey=<__NSMallocBlock__: 0x7713808480>, NSLocalizedDescription=Unlock Nothing to Continue}
+** TEST EXECUTE INTERRUPTED **
+sim-paired-test
+/Users/illia/Documents/Codex/2026-11-21/task/capturearc-release-prep/capturearc-large-file-streaming/iPhoneSender/Tests/ShareInputTests.swift:34: error: -[CaptureArcShareTests.ShareInputTests testPairedReceiverThroughShareProvider] : failed: caught error: "deadline"
+	 Executed 1 test, with 1 failure (1 unexpected) in 31.422 (31.434) seconds
+	 Executed 1 test, with 1 failure (1 unexpected) in 31.422 (31.437) seconds
+	 Executed 1 test, with 1 failure (1 unexpected) in 31.422 (31.440) seconds
+** TEST EXECUTE FAILED **
+paired-path-diagnostic
+Synthetic paired Wi-Fi path: status=satisfied, reason=notAvailable, wifi=true, interfaces=wifi
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.018 (0.021) seconds
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.018 (0.023) seconds
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.018 (0.024) seconds
+** TEST EXECUTE SUCCEEDED **
+paired-endpoint-diagnostic
+Synthetic paired Wi-Fi path: status=satisfied, reason=notAvailable, wifi=true, interfaces=wifi
+Synthetic paired authenticated endpoint: setup
+	 Executed 1 test, with 0 failures (0 unexpected) in 5.125 (5.127) seconds
+	 Executed 1 test, with 0 failures (0 unexpected) in 5.125 (5.127) seconds
+	 Executed 1 test, with 0 failures (0 unexpected) in 5.125 (5.128) seconds
+** TEST EXECUTE SUCCEEDED **
+
+Mac listener: listener_ready; TCP LISTEN confirmed.
+Host Bonjour check: existing CaptureArc services observed; exact private QA service absent over four seconds. No service identifier or pairing key recorded.

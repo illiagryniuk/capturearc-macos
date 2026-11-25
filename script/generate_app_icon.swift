@@ -263,38 +263,32 @@ private func drawIcon(in context: CGContext) {
     context.setShadow(offset: .zero, blur: 0, color: nil)
 }
 
-private func renderIcon(pixelSize: Int) throws -> Data {
+private func renderIcon(pixelSize: Int, opaque: Bool = false) throws -> Data {
     let size = CGFloat(pixelSize)
-    guard let bitmap = NSBitmapImageRep(
-        bitmapDataPlanes: nil,
-        pixelsWide: pixelSize,
-        pixelsHigh: pixelSize,
-        bitsPerSample: 8,
-        samplesPerPixel: 4,
-        hasAlpha: true,
-        isPlanar: false,
-        colorSpaceName: .deviceRGB,
-        bytesPerRow: 0,
-        bitsPerPixel: 0
-    ),
-    let graphics = NSGraphicsContext(bitmapImageRep: bitmap) else {
+    guard let context = CGContext(data: nil, width: pixelSize, height: pixelSize,
+        bitsPerComponent: 8, bytesPerRow: pixelSize * 4,
+        space: CGColorSpace(name: CGColorSpace.sRGB)!,
+        bitmapInfo: (opaque ? CGImageAlphaInfo.noneSkipLast : CGImageAlphaInfo.premultipliedLast).rawValue) else {
         throw CocoaError(.fileWriteUnknown)
     }
-
-    bitmap.size = CGSize(width: size, height: size)
+    let graphics = NSGraphicsContext(cgContext: context, flipped: false)
     NSGraphicsContext.saveGraphicsState()
     NSGraphicsContext.current = graphics
 
-    let context = graphics.cgContext
     context.setAllowsAntialiasing(true)
     context.setShouldAntialias(true)
     context.interpolationQuality = .high
     context.scaleBy(x: size / canvas, y: size / canvas)
+    if opaque {
+        context.setFillColor(NSColor(srgbRed: 0.035, green: 0.045, blue: 0.10, alpha: 1).cgColor)
+        context.fill(CGRect(x: 0, y: 0, width: canvas, height: canvas))
+    }
     drawIcon(in: context)
     graphics.flushGraphics()
     NSGraphicsContext.restoreGraphicsState()
 
-    guard let data = bitmap.representation(using: .png, properties: [:]) else {
+    guard let image = context.makeImage(),
+          let data = NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:]) else {
         throw CocoaError(.fileWriteUnknown)
     }
     return data
@@ -303,6 +297,13 @@ private func renderIcon(pixelSize: Int) throws -> Data {
 private let root = URL(fileURLWithPath: #filePath)
     .deletingLastPathComponent()
     .deletingLastPathComponent()
+// Render the existing brand as an opaque iOS icon without changing Mac assets.
+if CommandLine.arguments.contains("--iphone") {
+    let output = root.appendingPathComponent("iPhoneSender/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png")
+    try renderIcon(pixelSize: 1024, opaque: true).write(to: output)
+    print("Generated opaque iPhone app icon")
+    exit(0)
+}
 private let iconset = root.appendingPathComponent("Resources/AppIcon.iconset", isDirectory: true)
 private let brand = root.appendingPathComponent("Resources/Brand", isDirectory: true)
 

@@ -1,0 +1,21 @@
+Test Suite 'Selected tests' started at 2026-11-24 22:06:49.614.
+Test Suite 'CaptureArcShareTests.xctest' started at 2026-11-24 22:06:49.615.
+Test Suite 'ShareInputTests' started at 2026-11-24 22:06:49.615.
+Test Case '-[CaptureArcShareTests.ShareInputTests testPhotoUsesOriginalFileBytesAndSafeName]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testPhotoUsesOriginalFileBytesAndSafeName]' passed (0.207 seconds).
+Test Suite 'ShareInputTests' passed at 2026-11-24 22:06:49.824.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.207 (0.209) seconds
+Test Suite 'CaptureArcShareTests.xctest' passed at 2026-11-24 22:06:49.824.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.207 (0.209) seconds
+Test Suite 'Selected tests' passed at 2026-11-24 22:06:49.824.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.207 (0.211) seconds
+2026-11-24 22:06:50.231 xcodebuild[849:3166706] [MT] IDETestOperationsObserverDebug: 39.144 elapsed -- Testing started completed.
+2026-11-24 22:06:50.232 xcodebuild[849:3166706] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-24 22:06:50.232 xcodebuild[849:3166706] [MT] IDETestOperationsObserverDebug: 39.144 sec, +39.144 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/illia/Documents/Codex/2026-11-21/task/capturearc-release-prep/capturearc-large-file-streaming/DerivedData/LargeFiles27/Logs/Test/Test-CaptureArcSender-2026.11.24_22-06-06-+0200.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

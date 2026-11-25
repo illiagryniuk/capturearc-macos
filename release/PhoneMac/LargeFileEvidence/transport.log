@@ -1,0 +1,61 @@
+Test Suite 'All tests' started at 2026-11-24 21:55:15.914.
+Test Suite 'ClipboardDemoTransportTests.xctest' started at 2026-11-24 21:55:15.916.
+Test Suite 'AcknowledgementLifecycleTests' started at 2026-11-24 21:55:15.916.
+Test Case '-[ClipboardDemoTransportTests.AcknowledgementLifecycleTests testDelayedClientReceivesAcceptanceAndRejection]' started.
+Test Case '-[ClipboardDemoTransportTests.AcknowledgementLifecycleTests testDelayedClientReceivesAcceptanceAndRejection]' passed (0.646 seconds).
+Test Suite 'AcknowledgementLifecycleTests' passed at 2026-11-24 21:55:16.563.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.646 (0.647) seconds
+Test Suite 'FileStreamTests' started at 2026-11-24 21:55:16.563.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testCancelMidFileRemovesPartialAndAllowsNextTransfer]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testCancelMidFileRemovesPartialAndAllowsNextTransfer]' passed (0.087 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testChangedPreparedFileDoesNotCommit]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testChangedPreparedFileDoesNotCommit]' passed (0.042 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testCorruptDigestOverCapHeaderAndIdlePeerCannotCommit]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testCorruptDigestOverCapHeaderAndIdlePeerCannotCommit]' passed (1.033 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testFailedSaveNeverAcknowledgesSuccessAndRemovesPartial]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testFailedSaveNeverAcknowledgesSuccessAndRemovesPartial]' passed (0.062 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testFileOverTenMiBIsStreamedIntact]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testFileOverTenMiBIsStreamedIntact]' passed (0.057 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testFullShelfRejectsBeforeContents]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testFullShelfRejectsBeforeContents]' passed (0.027 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testInclusiveOneGiBBoundaryAndHourLikeExport]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testInclusiveOneGiBBoundaryAndHourLikeExport]' passed (9.239 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testNewSenderSmallFileToLegacyReceiver]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testNewSenderSmallFileToLegacyReceiver]' passed (0.008 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testOldPairingRequiresUpgradeForLargeFileWithoutNetwork]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testOldPairingRequiresUpgradeForLargeFileWithoutNetwork]' passed (0.019 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testOrphanedPartialsAreCleanedButLiveLeasesSurvive]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testOrphanedPartialsAreCleanedButLiveLeasesSurvive]' passed (0.003 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testOverCapAndInvalidLengthsRejectedBeforeSnapshot]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testOverCapAndInvalidLengthsRejectedBeforeSnapshot]' passed (0.003 seconds).
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testPreflightDiskFullAndMidWriteDiskFullCleanUp]' started.
+Test Case '-[ClipboardDemoTransportTests.FileStreamTests testPreflightDiskFullAndMidWriteDiskFullCleanUp]' passed (0.052 seconds).
+Test Suite 'FileStreamTests' passed at 2026-11-24 21:55:27.197.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 10.632 (10.634) seconds
+Test Suite 'LoopbackTransportTests' started at 2026-11-24 21:55:27.197.
+Test Case '-[ClipboardDemoTransportTests.LoopbackTransportTests testManualSessionTransfersLargePayloadThenStops]' started.
+Test Case '-[ClipboardDemoTransportTests.LoopbackTransportTests testManualSessionTransfersLargePayloadThenStops]' passed (30.212 seconds).
+Test Case '-[ClipboardDemoTransportTests.LoopbackTransportTests testTLSPSKRejectsWrongKeyThenTransfersSyntheticItems]' started.
+Test Case '-[ClipboardDemoTransportTests.LoopbackTransportTests testTLSPSKRejectsWrongKeyThenTransfersSyntheticItems]' passed (30.023 seconds).
+Test Suite 'LoopbackTransportTests' passed at 2026-11-24 21:56:27.432.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 60.235 (60.235) seconds
+Test Suite 'PairWireTests' started at 2026-11-24 21:56:27.432.
+Test Case '-[ClipboardDemoTransportTests.PairWireTests testFramingAndValidation]' started.
+Test Case '-[ClipboardDemoTransportTests.PairWireTests testFramingAndValidation]' passed (0.069 seconds).
+Test Case '-[ClipboardDemoTransportTests.PairWireTests testInvitationValidation]' started.
+Test Case '-[ClipboardDemoTransportTests.PairWireTests testInvitationValidation]' passed (0.000 seconds).
+Test Case '-[ClipboardDemoTransportTests.PairWireTests testLongUnicodeTextAndTextBoundaryRoundTrip]' started.
+Test Case '-[ClipboardDemoTransportTests.PairWireTests testLongUnicodeTextAndTextBoundaryRoundTrip]' passed (0.002 seconds).
+Test Case '-[ClipboardDemoTransportTests.PairWireTests testManualSessionRemainsValidUntilReceiverStopsAndUsesVersionedCode]' started.
+Test Case '-[ClipboardDemoTransportTests.PairWireTests testManualSessionRemainsValidUntilReceiverStopsAndUsesVersionedCode]' passed (0.000 seconds).
+Test Suite 'PairWireTests' passed at 2026-11-24 21:56:27.504.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.072 (0.072) seconds
+Test Suite 'ClipboardDemoTransportTests.xctest' passed at 2026-11-24 21:56:27.504.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 71.585 (71.588) seconds
+Test Suite 'All tests' passed at 2026-11-24 21:56:27.504.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 71.585 (71.591) seconds
+Synthetic large-file suite process peak RSS bytes: 103940096; increase: 17448960
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

@@ -1,0 +1,67 @@
+{
+  "apps": [
+    {
+      "bundle": "com.illiagryniuk.capturearc",
+      "version": "1.2",
+      "build": "4",
+      "minimumOS": "13.0",
+      "entitlements": {
+        "com.apple.application-identifier": "6S36MAPK89.com.illiagryniuk.capturearc",
+        "com.apple.developer.team-identifier": "6S36MAPK89",
+        "com.apple.security.app-sandbox": true,
+        "com.apple.security.files.bookmarks.app-scope": true,
+        "com.apple.security.files.user-selected.read-write": true,
+        "com.apple.security.network.client": true,
+        "com.apple.security.network.server": true
+      },
+      "strictSignature": "passed",
+      "resourceBundleIdentifier": "com.illiagryniuk.capturearc.resources.clipboarddemotransport-clipboarddemotransport",
+      "packagingFix": "Added missing SwiftPM resource bundle identifier before signing; App Store validation error 90276."
+    },
+    {
+      "bundle": "com.illiagryniuk.capturearc.sender",
+      "version": "1.0",
+      "build": "1",
+      "minimumOS": "17.0",
+      "entitlements": {
+        "application-identifier": "6S36MAPK89.com.illiagryniuk.capturearc.sender",
+        "beta-reports-active": true,
+        "com.apple.developer.team-identifier": "6S36MAPK89",
+        "get-task-allow": false,
+        "keychain-access-groups": [
+          "6S36MAPK89.com.illiagryniuk.capturearc.sender"
+        ]
+      },
+      "strictSignature": "passed"
+    },
+    {
+      "bundle": "com.illiagryniuk.capturearc.sender.share",
+      "version": "1.0",
+      "build": "1",
+      "minimumOS": "17.0",
+      "entitlements": {
+        "application-identifier": "6S36MAPK89.com.illiagryniuk.capturearc.sender.share",
+        "beta-reports-active": true,
+        "com.apple.developer.team-identifier": "6S36MAPK89",
+        "get-task-allow": false,
+        "keychain-access-groups": [
+          "6S36MAPK89.com.illiagryniuk.capturearc.sender"
+        ]
+      },
+      "strictSignature": "passed"
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "CaptureArc-1.2.pkg",
+      "bytes": 3321226,
+      "sha256": "bfcc28facb7f735106785166700428676c9553bef34d2ed00617cb526fb3decd",
+      "supersedesSHA256": "5eb4ec45ed6ea64e3268d60f83c848360317c1a6651c019ec065871dd5e7cfa9"
+    },
+    {
+      "file": "CaptureArcSender.ipa",
+      "bytes": 1111192,
+      "sha256": "9173363db657b243fc3b8ba090fbcc4365ccd282b2fec22d170d903ebda3ce51"
+    }
+  ]
+}

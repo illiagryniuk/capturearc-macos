@@ -28,6 +28,7 @@ final class NotchPanelController {
             library: library,
             actions: actions,
             fileStore: fileShelfStore,
+            incomingStore: IncomingTransferStore.live(),
             presentation: presentation
         )
         hostingView = NSHostingView(rootView: rootView)
@@ -320,6 +321,7 @@ private struct NotchPanelRootView: View {
     @ObservedObject var library: CaptureLibrary
     @ObservedObject var actions: CaptureActions
     @ObservedObject var fileStore: FileShelfStore
+    @ObservedObject var incomingStore: IncomingTransferStore
     @ObservedObject var presentation: NotchPanelPresentation
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
@@ -338,6 +340,7 @@ private struct NotchPanelRootView: View {
                         library: library,
                         actions: actions,
                         fileStore: fileStore,
+                        incomingStore: incomingStore,
                         onRequestClose: presentation.onRequestClose
                     )
                 }

@@ -42,6 +42,9 @@ chmod +x "$APP_BINARY"
 cp "$ROOT_DIR/Resources/Info.local.plist" "$INFO_PLIST"
 cp "$ROOT_DIR/Resources/AppIcon.icns" "$APP_RESOURCES/AppIcon.icns"
 cp "$ROOT_DIR/Resources/PrivacyInfo.xcprivacy" "$APP_RESOURCES/PrivacyInfo.xcprivacy"
+for resource in "$(dirname "$BUILD_BINARY")"/*.bundle; do
+  [[ -d "$resource" ]] && cp -R "$resource" "$APP_RESOURCES/"
+done
 
 # The SwiftPM executable carries its own ad-hoc signature. Re-sign the assembled
 # bundle so the executable and generated Info.plist form one valid local app.

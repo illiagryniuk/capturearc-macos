@@ -1,0 +1,11 @@
+QA listener ready
+QA browser ready
+QA listener ready
+QA DNS browse creation status=0
+QA DNS dispatch status=0
+QA browser ready
+QA listener ready
+
+Normal signed app: TCP LISTEN confirmed; exact private service absent in host browse.
+No error -65570 observed; cause remains undetermined.
+QA receiver stopped; temporary pairing removed.

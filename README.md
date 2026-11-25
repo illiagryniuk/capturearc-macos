@@ -57,3 +57,9 @@ Release metadata, privacy/support-page drafts, screenshots, and the remaining su
 - Support: <https://illiagryniuk.github.io/capturearc-macos/support.html>
 
 GitHub Actions publishes these pages from `release/AppStore/site/` after changes land on `main`.
+
+## iPhone sharing release candidate
+
+The next Mac update adds a **From iPhone** card shelf and a separate **CaptureArc Sender** iPhone app with a Share extension. Pair over Wi-Fi, send chosen text/photos/links/files, then paste received text or drag a card into another app. Pairing and received cards persist across app restarts until stopped/removed. No cloud service is involved.
+
+Release preparation, distribution identities, review notes, store copy, and known release gates are in [`release/PhoneMac`](release/PhoneMac/BUILD_AND_HANDOFF.md). The iPhone project is [`iPhoneSender/CaptureArcSender.xcodeproj`](iPhoneSender/CaptureArcSender.xcodeproj). Build locally with `bash script/build_iphone_release.sh --export`; this never uploads or submits.

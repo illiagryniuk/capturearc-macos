@@ -1,0 +1,54 @@
+Test Suite 'All tests' started at 2026-11-24 22:00:10.631.
+Test Suite 'CaptureArcShareTests.xctest' started at 2026-11-24 22:00:10.632.
+Test Suite 'ShareInputTests' started at 2026-11-24 22:00:10.632.
+Test Case '-[CaptureArcShareTests.ShareInputTests testAudioArchivesAndOpaqueBackupsUseFileRepresentation]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testAudioArchivesAndOpaqueBackupsUseFileRepresentation]' passed (0.408 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testCancelledProviderPreparationDoesNotProduceAFile]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testCancelledProviderPreparationDoesNotProduceAFile]' passed (0.013 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testCancellingUnresponsiveFileProviderCompletesPromptly]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testCancellingUnresponsiveFileProviderCompletesPromptly]' passed (0.012 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testExactOneGiBThroughRealFileProviderWithBoundedSnapshot]' started.
+2026-11-24 22:00:11.074603+0200 CaptureArcSender[368:3160010] [general] <NSItemProvider 0x10bd2ddc0> Finished loading file representation for type identifier 'public.zip-archive' with error: Error Domain=NSItemProviderErrorDomain Code=-1000 "Data transfer has been cancelled." UserInfo={NSLocalizedDescription=Data transfer has been cancelled.}
+Synthetic iOS 1 GiB provider (explicit file: false) process peak RSS bytes: 293814272; increase: 0
+Synthetic iOS 1 GiB provider (explicit file: true) process peak RSS bytes: 293814272; increase: 0
+Test Case '-[CaptureArcShareTests.ShareInputTests testExactOneGiBThroughRealFileProviderWithBoundedSnapshot]' passed (5.669 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testFileURLProviderKeepsTextDocumentAndCleansOwnedSnapshot]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testFileURLProviderKeepsTextDocumentAndCleansOwnedSnapshot]' passed (0.013 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testNamedTextDocumentOverTenMiBStaysAFileEvenWithTextAlternative]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testNamedTextDocumentOverTenMiBStaysAFileEvenWithTextAlternative]' passed (0.026 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testOverOneGiBFileURLIsRejectedBeforeSnapshot]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testOverOneGiBFileURLIsRejectedBeforeSnapshot]' passed (0.011 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testOversizedTextIsRejectedBeforeTransmission]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testOversizedTextIsRejectedBeforeTransmission]' passed (0.023 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testPairingKeychainRoundTripAndForget]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testPairingKeychainRoundTripAndForget]' passed (0.035 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testPhotoUsesOriginalFileBytesAndSafeName]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testPhotoUsesOriginalFileBytesAndSafeName]' passed (0.046 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testSelectedAttributedTextUsesPlainContents]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testSelectedAttributedTextUsesPlainContents]' passed (0.017 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testSelectedTextWithLegacyProviderPreservesUnicodeAndParagraphs]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testSelectedTextWithLegacyProviderPreservesUnicodeAndParagraphs]' passed (0.002 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testTenPagesOfUnicodeTextPreserveAllBytesAndParagraphs]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testTenPagesOfUnicodeTextPreserveAllBytesAndParagraphs]' passed (0.006 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testUnavailableURLRepresentationFallsBackToSelectedText]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testUnavailableURLRepresentationFallsBackToSelectedText]' passed (0.002 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testUTF8TextDataPreservesContent]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testUTF8TextDataPreservesContent]' passed (0.002 seconds).
+Test Case '-[CaptureArcShareTests.ShareInputTests testWebLinkPreservesQueryAndFragment]' started.
+Test Case '-[CaptureArcShareTests.ShareInputTests testWebLinkPreservesQueryAndFragment]' passed (0.003 seconds).
+Test Suite 'ShareInputTests' passed at 2026-11-24 22:00:16.937.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 6.288 (6.305) seconds
+Test Suite 'CaptureArcShareTests.xctest' passed at 2026-11-24 22:00:16.939.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 6.288 (6.307) seconds
+Test Suite 'All tests' passed at 2026-11-24 22:00:16.939.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 6.288 (6.308) seconds
+2026-11-24 22:00:17.704 xcodebuild[99618:3153538] [MT] IDETestOperationsObserverDebug: 91.011 elapsed -- Testing started completed.
+2026-11-24 22:00:17.704 xcodebuild[99618:3153538] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-24 22:00:17.704 xcodebuild[99618:3153538] [MT] IDETestOperationsObserverDebug: 91.011 sec, +91.011 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/CaptureArc-LargeFile-iOS27-20261124.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

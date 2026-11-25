@@ -99,6 +99,7 @@ final class AppRuntime: ObservableObject {
             }
             self.refreshStatus()
 
+            if UserDefaults.standard.bool(forKey: PreferenceKeys.captureSetupDeferred) { return }
             if self.distributionChannel.requiresExplicitCaptureFolderAuthorization,
                self.library.captureFolderURL == nil {
                 self.showOnboarding()
@@ -386,6 +387,7 @@ final class AppRuntime: ObservableObject {
             onComplete: { [weak self] in
                 self?.onboardingWindowController?.close()
                 self?.onboardingWindowController = nil
+                self?.showShelf()
             }
         )
         onboardingWindowController = controller

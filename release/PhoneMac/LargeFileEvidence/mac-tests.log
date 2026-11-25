@@ -1,0 +1,168 @@
+Test Suite 'All tests' started at 2026-11-24 21:58:18.855.
+Test Suite 'NotchShelfTests.xctest' started at 2026-11-24 21:58:18.857.
+Test Suite 'CaptureArrivalTimingTests' started at 2026-11-24 21:58:18.857.
+Test Case '-[NotchShelfTests.CaptureArrivalTimingTests testFlightAndSourceHaloStartWithoutAStationaryLeadIn]' started.
+Test Case '-[NotchShelfTests.CaptureArrivalTimingTests testFlightAndSourceHaloStartWithoutAStationaryLeadIn]' passed (0.002 seconds).
+Test Case '-[NotchShelfTests.CaptureArrivalTimingTests testImmediateHandoffPreservesReadableFlightTiming]' started.
+Test Case '-[NotchShelfTests.CaptureArrivalTimingTests testImmediateHandoffPreservesReadableFlightTiming]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.CaptureArrivalTimingTests testReducedMotionStillStartsImmediately]' started.
+Test Case '-[NotchShelfTests.CaptureArrivalTimingTests testReducedMotionStillStartsImmediately]' passed (0.000 seconds).
+Test Suite 'CaptureArrivalTimingTests' passed at 2026-11-24 21:58:18.860.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'CaptureGroupingTests' started at 2026-11-24 21:58:18.860.
+Test Case '-[NotchShelfTests.CaptureGroupingTests testFileStabilityRequiresThreeMatchingNonEmptySamples]' started.
+Test Case '-[NotchShelfTests.CaptureGroupingTests testFileStabilityRequiresThreeMatchingNonEmptySamples]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.CaptureGroupingTests testGroupsTodayYesterdayAndEarlierInReverseChronologicalOrder]' started.
+Test Case '-[NotchShelfTests.CaptureGroupingTests testGroupsTodayYesterdayAndEarlierInReverseChronologicalOrder]' passed (0.001 seconds).
+Test Case '-[NotchShelfTests.CaptureGroupingTests testNewestFirstUsesNameAsDeterministicTieBreaker]' started.
+Test Case '-[NotchShelfTests.CaptureGroupingTests testNewestFirstUsesNameAsDeterministicTieBreaker]' passed (0.000 seconds).
+Test Suite 'CaptureGroupingTests' passed at 2026-11-24 21:58:18.861.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'CaptureLibrarySourceTests' started at 2026-11-24 21:58:18.861.
+Test Case '-[NotchShelfTests.CaptureLibrarySourceTests testSystemSourceBaselinesExistingFilesThenNotifiesOnceForNewFile]' started.
+Test Case '-[NotchShelfTests.CaptureLibrarySourceTests testSystemSourceBaselinesExistingFilesThenNotifiesOnceForNewFile]' passed (0.275 seconds).
+Test Suite 'CaptureLibrarySourceTests' passed at 2026-11-24 21:58:19.136.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.275 (0.275) seconds
+Test Suite 'CaptureMediaTypeTests' started at 2026-11-24 21:58:19.136.
+Test Case '-[NotchShelfTests.CaptureMediaTypeTests testClassifiesImageAndMovieUniformTypes]' started.
+Test Case '-[NotchShelfTests.CaptureMediaTypeTests testClassifiesImageAndMovieUniformTypes]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.CaptureMediaTypeTests testRejectsTypesThatAreNotImagesOrMovies]' started.
+Test Case '-[NotchShelfTests.CaptureMediaTypeTests testRejectsTypesThatAreNotImagesOrMovies]' passed (0.001 seconds).
+Test Case '-[NotchShelfTests.CaptureMediaTypeTests testURLClassificationUsesUniformTypeResolution]' started.
+Test Case '-[NotchShelfTests.CaptureMediaTypeTests testURLClassificationUsesUniformTypeResolution]' passed (0.000 seconds).
+Test Suite 'CaptureMediaTypeTests' passed at 2026-11-24 21:58:19.138.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'DistributionEnvironmentTests' started at 2026-11-24 21:58:19.138.
+Test Case '-[NotchShelfTests.DistributionEnvironmentTests testExplicitAppStoreBuildRequiresFolderAuthorization]' started.
+Test Case '-[NotchShelfTests.DistributionEnvironmentTests testExplicitAppStoreBuildRequiresFolderAuthorization]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.DistributionEnvironmentTests testLocalBuildKeepsAutomaticScreenshotDiscovery]' started.
+Test Case '-[NotchShelfTests.DistributionEnvironmentTests testLocalBuildKeepsAutomaticScreenshotDiscovery]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.DistributionEnvironmentTests testSandboxEnvironmentUsesAppStoreSafetyPath]' started.
+Test Case '-[NotchShelfTests.DistributionEnvironmentTests testSandboxEnvironmentUsesAppStoreSafetyPath]' passed (0.000 seconds).
+Test Suite 'DistributionEnvironmentTests' passed at 2026-11-24 21:58:19.139.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'FileShelfPathTests' started at 2026-11-24 21:58:19.139.
+Test Case '-[NotchShelfTests.FileShelfPathTests testBuildsCurrentURLFromRootAndRelativePath]' started.
+Test Case '-[NotchShelfTests.FileShelfPathTests testBuildsCurrentURLFromRootAndRelativePath]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.FileShelfPathTests testRelativePathAcceptsRootAndDescendants]' started.
+Test Case '-[NotchShelfTests.FileShelfPathTests testRelativePathAcceptsRootAndDescendants]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.FileShelfPathTests testRelativePathRejectsSiblingFolderWithMatchingPrefix]' started.
+Test Case '-[NotchShelfTests.FileShelfPathTests testRelativePathRejectsSiblingFolderWithMatchingPrefix]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.FileShelfPathTests testSortsFoldersBeforeFilesThenUsesFinderStyleNames]' started.
+Test Case '-[NotchShelfTests.FileShelfPathTests testSortsFoldersBeforeFilesThenUsesFinderStyleNames]' passed (0.000 seconds).
+Test Suite 'FileShelfPathTests' passed at 2026-11-24 21:58:19.140.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'FileShelfStoreTests' started at 2026-11-24 21:58:19.140.
+Test Case '-[NotchShelfTests.FileShelfStoreTests testFolderTabLoadsNavigatesAndRestoresFromLocalBookmarks]' started.
+Test Case '-[NotchShelfTests.FileShelfStoreTests testFolderTabLoadsNavigatesAndRestoresFromLocalBookmarks]' passed (0.050 seconds).
+Test Suite 'FileShelfStoreTests' passed at 2026-11-24 21:58:19.190.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.050 (0.050) seconds
+Test Suite 'IncomingTransferClipboardTests' started at 2026-11-24 21:58:19.191.
+Test Case '-[NotchShelfTests.IncomingTransferClipboardTests testReceivedLongTextIsReadyToPasteWithoutTruncation]' started.
+Test Case '-[NotchShelfTests.IncomingTransferClipboardTests testReceivedLongTextIsReadyToPasteWithoutTruncation]' passed (0.013 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferClipboardTests testRejectedTextDoesNotReplaceClipboard]' started.
+Test Case '-[NotchShelfTests.IncomingTransferClipboardTests testRejectedTextDoesNotReplaceClipboard]' passed (0.013 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferClipboardTests testSamplesPhotosAndLinksDoNotReplaceClipboard]' started.
+Test Case '-[NotchShelfTests.IncomingTransferClipboardTests testSamplesPhotosAndLinksDoNotReplaceClipboard]' passed (0.004 seconds).
+Test Suite 'IncomingTransferClipboardTests' passed at 2026-11-24 21:58:19.221.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.030 (0.030) seconds
+Test Suite 'IncomingTransferPersistenceTests' started at 2026-11-24 21:58:19.221.
+Test Case '-[NotchShelfTests.IncomingTransferPersistenceTests testFullShelfRejectsNewItemWithoutLosingAcceptedItems]' started.
+Test Case '-[NotchShelfTests.IncomingTransferPersistenceTests testFullShelfRejectsNewItemWithoutLosingAcceptedItems]' passed (0.012 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferPersistenceTests testRelaunchRestoresFullTextAndOriginalPhotoWithoutReplacingClipboard]' started.
+Test Case '-[NotchShelfTests.IncomingTransferPersistenceTests testRelaunchRestoresFullTextAndOriginalPhotoWithoutReplacingClipboard]' passed (0.006 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferPersistenceTests testRemoveAndClearDeleteOnlyAppOwnedCopies]' started.
+Test Case '-[NotchShelfTests.IncomingTransferPersistenceTests testRemoveAndClearDeleteOnlyAppOwnedCopies]' passed (0.004 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferPersistenceTests testUnreadableManifestIsPreservedAndNewIntakeCannotOverwriteIt]' started.
+Test Case '-[NotchShelfTests.IncomingTransferPersistenceTests testUnreadableManifestIsPreservedAndNewIntakeCannotOverwriteIt]' passed (0.001 seconds).
+Test Suite 'IncomingTransferPersistenceTests' passed at 2026-11-24 21:58:19.244.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.022 (0.023) seconds
+Test Suite 'IncomingTransferPresentationTests' started at 2026-11-24 21:58:19.244.
+Test Case '-[NotchShelfTests.IncomingTransferPresentationTests testPhotoDragOffersOriginalImageBytesAndFileURL]' started.
+Test Case '-[NotchShelfTests.IncomingTransferPresentationTests testPhotoDragOffersOriginalImageBytesAndFileURL]' passed (0.016 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferPresentationTests testPhotoThumbnailIsBoundedAndHonorsPortraitOrientation]' started.
+Test Case '-[NotchShelfTests.IncomingTransferPresentationTests testPhotoThumbnailIsBoundedAndHonorsPortraitOrientation]' passed (0.009 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferPresentationTests testTextCardDragKeepsFullTextBeyondPreview]' started.
+Test Case '-[NotchShelfTests.IncomingTransferPresentationTests testTextCardDragKeepsFullTextBeyondPreview]' passed (0.006 seconds).
+Test Suite 'IncomingTransferPresentationTests' passed at 2026-11-24 21:58:19.275.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.031 (0.032) seconds
+Test Suite 'IncomingTransferStagingTests' started at 2026-11-24 21:58:19.275.
+Test Case '-[NotchShelfTests.IncomingTransferStagingTests testRejectsTraversalAndUnsafeLinks]' started.
+Test Case '-[NotchShelfTests.IncomingTransferStagingTests testRejectsTraversalAndUnsafeLinks]' passed (0.012 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferStagingTests testStagesTextWebLinkPhotoAndFileWithoutChangingNamesOrBytes]' started.
+Test Case '-[NotchShelfTests.IncomingTransferStagingTests testStagesTextWebLinkPhotoAndFileWithoutChangingNamesOrBytes]' passed (0.002 seconds).
+Test Suite 'IncomingTransferStagingTests' passed at 2026-11-24 21:58:19.290.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.014 (0.014) seconds
+Test Suite 'IncomingTransferStreamingTests' started at 2026-11-24 21:58:19.290.
+Test Case '-[NotchShelfTests.IncomingTransferStreamingTests testFailedManifestCommitDoesNotAddCardOrLeaveAdoptedFile]' started.
+Test Case '-[NotchShelfTests.IncomingTransferStreamingTests testFailedManifestCommitDoesNotAddCardOrLeaveAdoptedFile]' passed (0.006 seconds).
+Test Case '-[NotchShelfTests.IncomingTransferStreamingTests testLargeTextDocumentIsSavedRestoredAndDraggableWithoutClipboardChange]' started.
+Test Case '-[NotchShelfTests.IncomingTransferStreamingTests testLargeTextDocumentIsSavedRestoredAndDraggableWithoutClipboardChange]' passed (0.011 seconds).
+Test Suite 'IncomingTransferStreamingTests' passed at 2026-11-24 21:58:19.306.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.016 (0.017) seconds
+Test Suite 'LaunchAtLoginStatusTests' started at 2026-11-24 21:58:19.306.
+Test Case '-[NotchShelfTests.LaunchAtLoginStatusTests testMapsServiceManagementStatuses]' started.
+Test Case '-[NotchShelfTests.LaunchAtLoginStatusTests testMapsServiceManagementStatuses]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.LaunchAtLoginStatusTests testRegisteredStatusesKeepPreferenceEnabled]' started.
+Test Case '-[NotchShelfTests.LaunchAtLoginStatusTests testRegisteredStatusesKeepPreferenceEnabled]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.LaunchAtLoginStatusTests testUnavailableStatusExplainsSignedBundleRequirement]' started.
+Test Case '-[NotchShelfTests.LaunchAtLoginStatusTests testUnavailableStatusExplainsSignedBundleRequirement]' passed (0.000 seconds).
+Test Suite 'LaunchAtLoginStatusTests' passed at 2026-11-24 21:58:19.307.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'NotchGeometryTests' started at 2026-11-24 21:58:19.307.
+Test Case '-[NotchShelfTests.NotchGeometryTests testFallbackPillAndExpandedShelfPreserveExternalDisplayOrigin]' started.
+Test Case '-[NotchShelfTests.NotchGeometryTests testFallbackPillAndExpandedShelfPreserveExternalDisplayOrigin]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.NotchGeometryTests testIdleRimHugsCutoutWithoutUsingTheFullHitTarget]' started.
+Test Case '-[NotchShelfTests.NotchGeometryTests testIdleRimHugsCutoutWithoutUsingTheFullHitTarget]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.NotchGeometryTests testNotchedPanelActivatesOnlyInsidePhysicalCameraHousing]' started.
+Test Case '-[NotchShelfTests.NotchGeometryTests testNotchedPanelActivatesOnlyInsidePhysicalCameraHousing]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.NotchGeometryTests testRejectsMalformedAuxiliaryGap]' started.
+Test Case '-[NotchShelfTests.NotchGeometryTests testRejectsMalformedAuxiliaryGap]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.NotchGeometryTests testResolvesPhysicalNotchGapFromAuxiliaryAreas]' started.
+Test Case '-[NotchShelfTests.NotchGeometryTests testResolvesPhysicalNotchGapFromAuxiliaryAreas]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.NotchGeometryTests testSurfaceCutoutIsCenteredAndExtendsPastTheTopEdge]' started.
+Test Case '-[NotchShelfTests.NotchGeometryTests testSurfaceCutoutIsCenteredAndExtendsPastTheTopEdge]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.NotchGeometryTests testUsesFallbackWhenDisplayHasNoAuxiliaryTopAreas]' started.
+Test Case '-[NotchShelfTests.NotchGeometryTests testUsesFallbackWhenDisplayHasNoAuxiliaryTopAreas]' passed (0.000 seconds).
+Test Suite 'NotchGeometryTests' passed at 2026-11-24 21:58:19.309.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'RetentionEligibilityTests' started at 2026-11-24 21:58:19.309.
+Test Case '-[NotchShelfTests.RetentionEligibilityTests testOldBaselineFileIsNeverEligibleButManagedCaptureIs]' started.
+Test Case '-[NotchShelfTests.RetentionEligibilityTests testOldBaselineFileIsNeverEligibleButManagedCaptureIs]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.RetentionEligibilityTests testPinnedAndRecentManagedCapturesRemainSafe]' started.
+Test Case '-[NotchShelfTests.RetentionEligibilityTests testPinnedAndRecentManagedCapturesRemainSafe]' passed (0.000 seconds).
+Test Suite 'RetentionEligibilityTests' passed at 2026-11-24 21:58:19.309.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'ScreenshotLocationResolverTests' started at 2026-11-24 21:58:19.309.
+Test Case '-[NotchShelfTests.ScreenshotLocationResolverTests testFallsBackToDesktopWhenPreferenceIsAbsent]' started.
+Test Case '-[NotchShelfTests.ScreenshotLocationResolverTests testFallsBackToDesktopWhenPreferenceIsAbsent]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.ScreenshotLocationResolverTests testResolvesExplicitAbsoluteAndHomeRelativeLocations]' started.
+Test Case '-[NotchShelfTests.ScreenshotLocationResolverTests testResolvesExplicitAbsoluteAndHomeRelativeLocations]' passed (0.000 seconds).
+Test Suite 'ScreenshotLocationResolverTests' passed at 2026-11-24 21:58:19.310.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'ShelfHeaderLayoutTests' started at 2026-11-24 21:58:19.310.
+Test Case '-[NotchShelfTests.ShelfHeaderLayoutTests testDegenerateWidthDoesNotProposeNegativeSpace]' started.
+Test Case '-[NotchShelfTests.ShelfHeaderLayoutTests testDegenerateWidthDoesNotProposeNegativeSpace]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.ShelfHeaderLayoutTests testLongLocalizedTitleDoesNotShrinkNavigationBudget]' started.
+Test Case '-[NotchShelfTests.ShelfHeaderLayoutTests testLongLocalizedTitleDoesNotShrinkNavigationBudget]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.ShelfHeaderLayoutTests testNarrowWidthKeepsFullActionRailAndTitleReserve]' started.
+Test Case '-[NotchShelfTests.ShelfHeaderLayoutTests testNarrowWidthKeepsFullActionRailAndTitleReserve]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.ShelfHeaderLayoutTests testNormalWidthCanUseFullLabels]' started.
+Test Case '-[NotchShelfTests.ShelfHeaderLayoutTests testNormalWidthCanUseFullLabels]' passed (0.000 seconds).
+Test Suite 'ShelfHeaderLayoutTests' passed at 2026-11-24 21:58:19.310.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SystemScreenCaptureTests' started at 2026-11-24 21:58:19.310.
+Test Case '-[NotchShelfTests.SystemScreenCaptureTests testClassifierAcceptsScreenshotsAndScreenRecordings]' started.
+Test Case '-[NotchShelfTests.SystemScreenCaptureTests testClassifierAcceptsScreenshotsAndScreenRecordings]' passed (0.000 seconds).
+Test Case '-[NotchShelfTests.SystemScreenCaptureTests testSystemSourceFilterRejectsOrdinaryMedia]' started.
+Test Case '-[NotchShelfTests.SystemScreenCaptureTests testSystemSourceFilterRejectsOrdinaryMedia]' passed (0.002 seconds).
+Test Suite 'SystemScreenCaptureTests' passed at 2026-11-24 21:58:19.312.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'NotchShelfTests.xctest' passed at 2026-11-24 21:58:19.313.
+	 Executed 52 tests, with 0 failures (0 unexpected) in 0.449 (0.455) seconds
+Test Suite 'All tests' passed at 2026-11-24 21:58:19.313.
+	 Executed 52 tests, with 0 failures (0 unexpected) in 0.449 (0.458) seconds
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

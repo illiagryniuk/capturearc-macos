@@ -1,0 +1,35 @@
+[
+  {
+    "platform": "macOS",
+    "bundleIdentifier": "com.illiagryniuk.capturearc",
+    "appleID": "6789554439",
+    "version": "1.2",
+    "build": "4",
+    "uploadState": "success",
+    "uploadedAt": "2026-11-22T00:27:08Z",
+    "uploadTitle": "Uploaded to Apple",
+    "errors": [],
+    "warnings": [],
+    "appReviewSubmissionConfirmed": false
+  },
+  {
+    "platform": "iOS",
+    "bundleIdentifier": "com.illiagryniuk.capturearc.sender",
+    "appleID": "6837705742",
+    "version": "1.0",
+    "build": "1",
+    "uploadState": "warnings",
+    "uploadedAt": "2026-11-21T14:06:05Z",
+    "uploadTitle": "Uploaded with warnings",
+    "errors": [],
+    "warnings": [
+      {
+        "code": 90725,
+        "description": "App Store Connect Warning",
+        "domain": "ContentDelivery",
+        "recoverySuggestion": "SDK version issue. This app was built with the iOS 26.5 SDK. Starting April 2027, iOS and iPadOS apps must be built with the iOS 27 SDK or later, included in Xcode 27 or later, in order to be uploaded to App Store Connect or submitted for distribution."
+      }
+    ],
+    "appReviewSubmissionConfirmed": false
+  }
+]

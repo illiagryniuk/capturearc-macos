@@ -1,0 +1,10 @@
+mac-1.2-5
+2026-11-25 01:51:08.460 xcodebuild[4508:3346766] Progress 100%: Uploaded package is processing.
+2026-11-25 01:51:08.466 xcodebuild[4508:3346766] Progress 100%: Upload succeeded.
+Uploaded CaptureArc
+** EXPORT SUCCEEDED **
+sender-1.0-2
+2026-11-25 01:51:20.920 xcodebuild[4507:3347703] Progress 100%: Uploaded package is processing.
+2026-11-25 01:51:20.929 xcodebuild[4507:3347703] Progress 100%: Upload succeeded.
+Uploaded CaptureArcSender
+** EXPORT SUCCEEDED **
